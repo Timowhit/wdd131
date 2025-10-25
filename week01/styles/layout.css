@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: grid;
+}
+
+nav-container {
+    display: flex;
+
+}
+
+nav-item {
+    margin: 0 15px;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    color: #333;
+    cursor: pointer;
+}
+
+nav-item:hover {
+    text-decoration: underline;
+} 
