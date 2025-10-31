@@ -25,13 +25,21 @@ body{
 }
 
 /* Layout areas */
-header{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.5rem 0}
-main{grid-column:1/2;padding:.5rem}
+header{
+    grid-column:1/-1;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:1rem;
+    padding:.5rem 0;
+}
+
+main{grid-column:1/2;padding:.5rem;max-width: fit-content;justify-content: center}
 aside{grid-column:2/3;padding:.5rem}
 footer{grid-column:1/-1;padding:.5rem 0;border-top:1px solid #e6e6e6;margin-top:0.5rem}
 
 /* Header */
-header > span{font-weight:600}
+header > span{display:block;font-size:1.1rem}
 nav{display:flex;gap:.5rem;flex-wrap:wrap}
 nav a{
     text-decoration:none;color:var(--accent);
