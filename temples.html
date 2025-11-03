@@ -4,13 +4,37 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="styles/temples.css">
-    <script src="scripts/temples.js" defer></script>
+    <script src="scripts/getdates.js" defer></script>
+    <script>
+        function loadStylesheetForDevice() {
+            const head = document.head;
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+
+            if (window.innerWidth < 768) {
+                link.href = 'styles/temples.css'; // Path to your mobile-specific CSS
+            }
+            else {
+                link.href = 'styles/temples-large.css'; // Path to your desktop-specific CSS
+            }
+
+            // Remove existing stylesheet if any, then append the new one
+            const existingLink = document.querySelector('link[rel="stylesheet"]');
+            if (existingLink) {
+                head.removeChild(existingLink);
+            }
+            head.appendChild(link);
+        }
+
+        window.onload = loadStylesheetForDevice;
+        window.onresize = loadStylesheetForDevice;
+    </script>
     <title>WDD 131 | Dynamic Web Fundamentals | Timothy Whitehead</title>
     <meta name="description" content="Timothy Whitehead's WDD131 Portfolio">
     <meta name="author" content="Timothy Whitehead">
 </head>
-<body>
+
+<body>   
     <header>
         <span>Temple Album</span>
         <nav>
@@ -24,20 +48,28 @@
     <main>
         <h1>Temples of The Church of Jesus Christ of Latter-day Saints</h1>
         <figure> <!-- 1 -->
-            <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
-            <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            <div class="image-container">
+                <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
+                <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            </div>
         </figure>
         <figure> <!-- 2 -->
-            <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
-            <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            <div class="image-container">
+                <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
+                <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            </div>
         </figure>
         <figure> <!-- 3 -->
-            <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
-            <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            <div class="image-container">
+                <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
+                <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            </div>
         </figure>
         <figure> <!-- 4 -->
-            <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
-            <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            <div class="image-container">
+                <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
+                <figcaption>Temples are considered houses of the Lord and are distinct from regular meetinghouses or chapels.</figcaption>
+            </div>
         </figure>
         <figure> <!-- 5 -->
             <img src="images/temple_banner.jpg" alt="Temples of The Church of Jesus Christ of Latter-day Saints" width="600">
