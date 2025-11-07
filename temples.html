@@ -31,6 +31,36 @@
 
         window.onload = loadStylesheetForDevice;
         window.onresize = loadStylesheetForDevice;
+
+        function setupHamburgerMenu() {
+            if (window.innerWidth < 768) {
+                let nav = document.querySelector('nav');
+                if (!document.getElementById('hamburger')) {
+                    const hamburger = document.createElement('button');
+                    hamburger.id = 'hamburger';
+                    hamburger.innerHTML = '&#9776;';
+                    hamburger.setAttribute('aria-label', 'Open navigation menu');
+                    nav.parentNode.insertBefore(hamburger, nav);
+
+                    nav.style.display = 'none';
+
+                    hamburger.onclick = function () {
+                        nav.style.display = nav.style.display === 'none' ? 'block' : 'none';
+                    };
+                }
+            } else {
+                const hamburger = document.getElementById('hamburger');
+                let nav = document.querySelector('nav');
+                if (hamburger) {
+                    hamburger.parentNode.removeChild(hamburger);
+                }
+                if (nav) {
+                    nav.style.display = '';
+                }
+            }
+        }
+        window.addEventListener('load', setupHamburgerMenu);
+        window.addEventListener('resize', setupHamburgerMenu);
     </script>
     <title>WDD 131 | Dynamic Web Fundamentals | Timothy Whitehead</title>
     <meta name="description" content="Timothy Whitehead's WDD131 Portfolio">
