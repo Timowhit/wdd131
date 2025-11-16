@@ -7,40 +7,70 @@
     <meta name="author" content="Timothy Whitehead">
     <link rel="stylesheet" href="styles/place.css" />
     <script src="scripts/place.js" defer></script>
-    
 </head>
 <body>
-    <header>
-        <div class="titlebox">
-            <h1>Place Title</h1>
+    <header class="header">
+        <div class="title-box">
+            <h1>Okinawa</h1>
         </div>
     </header>
-    <main>
-        <img src="images/img.webp" alt="Image">
-
-        <div class="container">
-            <section>
-                <h2>Data</h2>
-                <p>label: value</p>
-                <p>label: value</p>
-                <p>label: value</p>
-                <p>label: value</p>
-            </section>
+    
+    <main class="main-content">
+        <div class="large-image">
+            <img src="images/okinawa.webp" alt="Large scenic image" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
-        <div class="container">
-            <section>
-                <h2>Weather</h2>
-                <img src="images/weathericon.svg" alt="icon">
-                <p>label: value</p>
-                <p>label: value</p>
-                <p>label: value</p>
-                <p>label: value</p>
-            </section>
+
+        <div class="data-panel">
+            <h3>Data</h3>
+            <div class="data-item">
+                <span>Label:</span>
+                <span>Value</span>
+            </div>
+            <div class="data-item">
+                <span>Label:</span>
+                <span>Value</span>
+            </div>
+            <div class="data-item">
+                <span>Label:</span>
+                <span>Value</span>
+            </div>
+            <div class="data-item">
+                <span>Label:</span>
+                <span>Value</span>
+            </div>
+        </div>
+
+        <div class="weather-panel">
+            <div class="weather-header">
+                <h3>Weather</h3>
+                <img src="images/weathericon.svg" alt="Weather icon" class="weather-icon">
+            </div>
+            <div class="data-item">
+                <span>Temperature:</span>
+                <span>46°F</span>
+            </div>
+            <div class="data-item">
+                <span>Wind Speed:</span>
+                <span>10 mph</span>
+            </div>
+            <div class="data-item">
+                <span>Wind Chill:</span>
+                <span id="windchill">N/A</span>
+            </div>
+            <div class="data-item">
+                <span>Conditions:</span>
+                <span>Partly Cloudy</span>
+            </div>
         </div>
     </main>
-    <footer>
-        <p>&copy;<span id="currentyear"></span> Timothy Whitehead - Arizona, USA</p>
-        <p>Last Updated: <span id="lastmodified"></span></p>
+    
+    <footer class="footer">
+        <div class="footer-line">
+            &copy;<span id="currentyear"></span> Timothy Whitehead - Arizona, USA
+        </div>
+        <div class="footer-line">
+            Last Updated: <span id="lastmodified"></span>
+        </div>
     </footer>                  
 </body>
 </html>
