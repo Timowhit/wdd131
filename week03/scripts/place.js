@@ -1,29 +1,3 @@
-function loadStylesheetForDevice() {
-    const head = document.head;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-
-    if (window.innerWidth < 768) {
-        link.href = 'styles/place.css';
-        const script = document.createElement('script');
-        script.src = 'scripts/place.js';
-        script.defer = true;
-        head.appendChild(script);
-    }
-    else {
-        link.href = 'styles/place_large.css';
-    }
-
-    const existingLink = document.querySelector('link[rel="stylesheet"]');
-    if (existingLink) {
-        head.removeChild(existingLink);
-    }
-    head.appendChild(link);
-}
-
-window.onload = loadStylesheetForDevice;
-window.onresize = loadStylesheetForDevice;
-    
 /*
     place.js
     Define static values to match the displayed weather section values.
