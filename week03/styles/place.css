@@ -1,10 +1,10 @@
 :root {
     --border-color: #333;
     --background-color: #fafafa;
-    --font-color: #666;
-    --primary-color: #0047AB;
-    --secondary-color: #FF6B9D;
-    --accent-color: #00A86B;
+    --font-color: #595959;
+    --primary-color: #003d8f;
+    --secondary-color: #d4175a;
+    --accent-color: #008f5b;
 }
 
 @media (max-width: 767px) {
@@ -16,26 +16,30 @@
         
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            background-color: #e8f4f8;
             padding: 0px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            min-height: 100vh;
         }
         
         .container {
             width: 100%;
             max-width: 375px;
-            background-color: var(--background-color);
-            border: 2px solid var(--border-color);
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .header {
             width: 100%;
             padding: 20px;
-            border-bottom: 2px solid var(--border-color);
             text-align: center;
-            background-color: var(--secondary-color);
+            background-color: var(--primary-color);
+            color: #ffffff;
         }
         
         .title-box {
@@ -43,19 +47,20 @@
             font-size: 20px;
             font-weight: bold;
             display: inline-block;
+            color: #ffffff;
         }
         
         .main-content {
             width: 100%;
             display: flex;
             flex-direction: column;
+            flex: 1;
         }
 
         .large-image {
             width: 100%;
             height: 300px;
-            border-bottom: 2px solid var(--border-color);
-            background-color: var(--background-color);
+            background-color: #f8f8f8;
             overflow: hidden;
             position: relative;
         }
@@ -68,11 +73,13 @@
 
         .data-panel {
             width: 100%;
-            border-bottom: 2px solid var(--border-color);
-            padding: 20px;
-            background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
+            padding: 24px 20px;
+            background-color: #ffffff;
+            color: var(--font-color);
             position: relative;
             z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--primary-color);
         }
         
         .data-panel h3 {
@@ -80,6 +87,7 @@
             margin-bottom: 15px;
             font-weight: bold;
             text-align: center;
+            color: var(--primary-color);
         }
         
         .data-item {
@@ -96,24 +104,28 @@
         
         .weather-panel {
             width: 100%;
-            border-bottom: 2px solid var(--border-color);
-            padding: 20px;
-            background: linear-gradient(0deg, var(--primary-color), var(--accent-color));
+            padding: 24px 20px;
+            background-color: #ffffff;
+            color: var(--font-color);
             position: relative;
             z-index: 1;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--accent-color);
         }
         
         .weather-header {
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 10px;
             margin-bottom: 15px;
         }
         
         .weather-header h3 {
             font-size: 18px;
             font-weight: bold;
+            color: var(--accent-color);
         }
         
         .weather-icon {
@@ -126,8 +138,8 @@
             padding: 20px;
             text-align: center;
             font-size: 11px;
-            color: #666;
-            background-color: var(--background-color);
+            color: var(--font-color);
+            background-color: #f8f8f8;
             line-height: 1.6;
         }
         
@@ -144,55 +156,58 @@
         
         body {
             font-family: Arial, sans-serif;
-            background-color: var(--background-color);
+            background: linear-gradient(to bottom, #e8f4f8 0%, #f0f0f0 100%);
             padding: 20px;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: var(--background-color);
-            border: 2px solid var(--border-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
         
         .header {
-            padding: 30px;
-            border-bottom: 2px solid var(--border-color);
+            padding: 20px 20px;
             text-align: center;
-            background-color: var(--background-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0056c7 100%);
+            color: #ffffff;
+            border-radius: 12px 12px 0 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
         
         .title-box {
             display: inline-block;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
             padding: 15px 40px;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .main-content {
             position: relative;
             padding: 20px;
-            min-height: 500px;
-            height: max-content;
+            background-color: #ffffff;
+            flex: 1;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
         
         .data-panel {
-            border: 2px solid var(--border-color);
-            padding: 15px;
-            background-color: var(--background-color);
+            padding: 20px;
+            background-color: #ffffff;
+            color: var(--font-color);
             position: absolute;
             top: 20px;
             left: 20px;
-            width: 200px;
+            width: 220px;
             z-index: 2;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--primary-color);
         }
         
         .data-panel h3 {
             font-size: 18px;
             margin-bottom: 15px;
             font-weight: bold;
+            color: var(--font-color);
         }
         
         .data-item {
@@ -210,8 +225,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid var(--border-color);
-            background-color: var(--background-color);
+            background-color: #f8f8f8;
             position: absolute;
             top: 0;
             left: 0;
@@ -222,21 +236,24 @@
         
         .large-image span {
             font-size: 18px;
-            color: #666;
+            color: var(--font-color);
             z-index: 1;
             background-color: var(--background-color);
             padding: 10px;
         }
         
         .weather-panel {
-            border: 2px solid var(--border-color);
-            padding: 15px;
-            background-color: var(--background-color);
+            padding: 20px;
+            background-color: #ffffff;
+            color: var(--font-color);
             position: absolute;
             bottom: 20px;
             right: 20px;
-            width: 200px;
+            width: 220px;
             z-index: 2;
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+            border-left: 4px solid var(--accent-color);
         }
         
         .weather-header {
@@ -249,12 +266,12 @@
         .weather-header h3 {
             font-size: 18px;
             font-weight: bold;
+            color: var(--font-color);
         }
         
         .weather-icon {
             width: 30px;
             height: 30px;
-            border: 2px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -262,12 +279,13 @@
         }
         
         .footer {
-            border-top: 2px solid var(--border-color);
-            padding: 20px;
+            padding: 24px 20px;
             text-align: center;
             font-size: 12px;
-            color: #666;
-            background-color: var(--background-color);
+            color: var(--font-color);
+            background-color: #f8f8f8;
+            border-radius: 0 0 12px 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
         }
         
         .footer-line {

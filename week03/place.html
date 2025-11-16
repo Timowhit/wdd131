@@ -11,13 +11,21 @@
 <body>
     <header class="header">
         <div class="title-box">
-            <h1>Okinawa</h1>
+            <h1>Okinawa, Japan</h1>
         </div>
     </header>
     
     <main class="main-content">
         <div class="large-image">
-            <img src="images/okinawa.webp" alt="Large scenic image" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="images/okinawa.webp" 
+             srcset="images/okinawa.webp 400w,
+                 images/okinawa.webp 800w,
+                 images/okinawa.webp 1200w"
+             sizes="(max-width: 400px) 400px,
+                (max-width: 800px) 800px,
+                1200px"
+             alt="Scenic view of Okinawa coastline" 
+             style="width: 100%; height: 100%; object-fit: cover;">
         </div>
 
         <div class="data-panel">
