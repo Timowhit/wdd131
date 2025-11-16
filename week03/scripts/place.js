@@ -22,3 +22,7 @@ if (temperature <= 50 && windSpeed > 3) {
 
 // Export or expose windChillDisplay if needed (uncomment for module usage)
 // module.exports = { calculateWindChill, windChillDisplay };
+
+document.getElementById('currentyear').textContent = new Date().getFullYear();
+
+document.getElementById("lastmodified").innerHTML = document.lastModified;
