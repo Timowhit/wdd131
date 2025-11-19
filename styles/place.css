@@ -88,6 +88,7 @@
             font-weight: bold;
             text-align: center;
             color: var(--primary-color);
+            text-shadow: #333 0px 0px rgba(0, 0, 0, 0.15);
         }
         
         .data-item {
@@ -126,6 +127,7 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--accent-color);
+            text-shadow: #333 0px 0px rgba(0, 0, 0, 0.15);
         }
         
         .weather-icon {
