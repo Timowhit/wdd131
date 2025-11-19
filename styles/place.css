@@ -82,7 +82,7 @@
             border-left: 4px solid var(--primary-color);
         }
         
-        .data-panel h3 {
+        .data-panel h2 {
             font-size: 18px;
             margin-bottom: 15px;
             font-weight: bold;
@@ -122,7 +122,7 @@
             margin-bottom: 15px;
         }
         
-        .weather-header h3 {
+        .weather-header h2 {
             font-size: 18px;
             font-weight: bold;
             color: var(--accent-color);
@@ -203,7 +203,7 @@
             border-left: 4px solid var(--primary-color);
         }
         
-        .data-panel h3 {
+        .data-panel h2 {
             font-size: 18px;
             margin-bottom: 15px;
             font-weight: bold;
@@ -263,7 +263,7 @@
             margin-bottom: 15px;
         }
         
-        .weather-header h3 {
+        .weather-header h2 {
             font-size: 18px;
             font-weight: bold;
             color: var(--font-color);
