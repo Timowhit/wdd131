@@ -1,10 +1,10 @@
 :root {
     --border-color: #333;
     --background-color: #fafafa;
-    --font-color: #595959;
-    --primary-color: #003d8f;
+    --font-color: #333333;
+    --primary-color: #002855;
     --secondary-color: #d4175a;
-    --accent-color: #008f5b;
+    --accent-color: #006642;
 }
 
 @media (max-width: 767px) {
@@ -88,7 +88,7 @@
             font-weight: bold;
             text-align: center;
             color: var(--primary-color);
-            text-shadow: #333 0px 0px rgba(0, 0, 0, 0.15);
+            text-shadow: none;
         }
         
         .data-item {
@@ -127,7 +127,7 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--accent-color);
-            text-shadow: #333 0px 0px rgba(0, 0, 0, 0.15);
+            text-shadow: none;
         }
         
         .weather-icon {
