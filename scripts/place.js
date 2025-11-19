@@ -15,10 +15,13 @@ function calculateWindChill(temp, speed) {
 // Imperial limits: temperature <= 50 °F and windSpeed > 3 mph
 let windChillDisplay;
 if (temperature <= 50 && windSpeed > 3) {
-    windChillDisplay = Math.round(calculateWindChill(temperature, windSpeed));
+    windChillDisplay = Math.round(calculateWindChill(temperature, windSpeed)) + "°F";
 } else {
     windChillDisplay = "N/A";
 }
+
+// Update the windchill element in the weather section
+document.getElementById('windchill').textContent = windChillDisplay;
 
 // Export or expose windChillDisplay if needed (uncomment for module usage)
 // module.exports = { calculateWindChill, windChillDisplay };
