@@ -169,7 +169,7 @@
             background: linear-gradient(135deg, var(--primary-color) 0%, #0056c7 100%);
             color: #ffffff;
             border-radius: 12px 12px 0 0;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
         }
         
         .title-box {
@@ -208,7 +208,6 @@
             margin-bottom: 15px;
             font-weight: bold;
             color: var(--font-color);
-            box-shadow: #333 0px 0px 2px;
         }
         
         .data-item {
@@ -268,7 +267,6 @@
             font-size: 18px;
             font-weight: bold;
             color: var(--font-color);
-            text-shadow: #333 0px 0px 2px;
         }
         
         .weather-icon {
