@@ -208,7 +208,7 @@
             margin-bottom: 15px;
             font-weight: bold;
             color: var(--font-color);
-            text-shadow: #333 0px 0px 2px;
+            box-shadow: #333 0px 0px 2px;
         }
         
         .data-item {
