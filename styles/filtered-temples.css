@@ -77,10 +77,12 @@
 
     .image-container img {
         width: 100%;
+        max-width: 100%;
         height: auto;
         display: block;
-        margin: -1rem -1rem 0 -1rem;
-        width: calc(100% + 2rem);
+        margin: 0 auto;
+        object-fit: contain;
+        box-sizing: border-box;
     }
 
     .image-container h3 {
