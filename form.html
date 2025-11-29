@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="styles/form.css">
+    <script src="scripts/form.js" defer></script>
+    <script src="scripts/getdates.js" defer></script>
+    <title>Product Review Form | WDD 131 | Timothy Whitehead</title>
+    <meta name="description" content="Submit a product review for electronics">
+    <meta name="author" content="Timothy Whitehead">
+</head>
+
+<body>
+    <header>
+        <h1>Product Review Form</h1>
+        <p>Share your experience with our products</p>
+    </header>
+    
+    <main>
+        <form action="review.html" method="get">
+            <fieldset>
+                <legend>Product Information</legend>
+                
+                <label for="productName">Product Name <span class="required">*</span></label>
+                <select id="productName" name="productName" required>
+                    <option value="" disabled selected>Select a Product ...</option>
+                </select>
+
+                <label>Overall Rating <span class="required">*</span></label>
+                <div class="star-rating">
+                    <input type="radio" id="star5" name="rating" value="5" required>
+                    <label for="star5" title="5 stars">★</label>
+                    
+                    <input type="radio" id="star4" name="rating" value="4">
+                    <label for="star4" title="4 stars">★</label>
+                    
+                    <input type="radio" id="star3" name="rating" value="3">
+                    <label for="star3" title="3 stars">★</label>
+                    
+                    <input type="radio" id="star2" name="rating" value="2">
+                    <label for="star2" title="2 stars">★</label>
+                    
+                    <input type="radio" id="star1" name="rating" value="1">
+                    <label for="star1" title="1 star">★</label>
+                </div>
+
+                <label for="installDate">Date of Installation <span class="required">*</span></label>
+                <input type="date" id="installDate" name="installDate" required style="cursor: pointer;">
+            </fieldset>
+
+            <fieldset>
+                <legend>Product Features</legend>
+                <p class="field-description">Select all features you found useful:</p>
+                
+                <div class="checkbox-group">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="performance" name="features" value="Performance">
+                        <label for="performance">High Performance</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="battery" name="features" value="Battery Life">
+                        <label for="battery">Long Battery Life</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="connectivity" name="features" value="Connectivity">
+                        <label for="connectivity">Easy Connectivity</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="display" name="features" value="Display Quality">
+                        <label for="display">Excellent Display Quality</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="design" name="features" value="Design">
+                        <label for="design">Sleek Design</label>
+                    </div>
+                    
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="durability" name="features" value="Durability">
+                        <label for="durability">Durability</label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Your Review</legend>
+                
+                <label for="writtenReview">Written Review</label>
+                <textarea id="writtenReview" name="writtenReview" rows="6" 
+                          placeholder="Share your detailed experience with this product..."></textarea>
+
+                <label for="userName">Your Name</label>
+                <input type="text" id="userName" name="userName" 
+                       placeholder="Enter your name (optional)">
+            </fieldset>
+
+            <button type="submit">Submit Review</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>&copy;<span id="currentyear"></span> Timothy Whitehead | &#9728; Arizona, United States of America &#9729; </p>
+        <p>Last Updated: <span id="lastmodified"></span></p>
+    </footer>
+</body>
+
+</html>
