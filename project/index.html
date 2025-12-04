@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>TradeSmart Guide</title>
+  <link rel="stylesheet" href="styles/siteplan.css">
+</head>
+<body>
+  <header>
+    <span class="logo">TradeSmart Guide</span>
+    <details class="nav-toggle">
+      <summary aria-label="Toggle menu">☰ Menu</summary>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#how">How It Works</a>
+        <a href="#results">Results</a>
+        <a href="#siteplan">Site Plan</a>
+      </nav>
+    </details>
+  </header>
+
+  <main class="container">
+    <section id="home" class="hero">
+      <h1>Stop Guessing. Start Planning.</h1>
+      <p class="muted">Build a personalized trading plan based on your goals, timeline, and risk tolerance.</p>
+      <p><a class="btn" href="#how">Create Your Trading Plan</a></p>
+    </section>
+
+    <section id="highlights" class="grid">
+      <div class="card">
+        <h3>Personalized Plans</h3>
+        <p>Enter your investment goal, time horizon, and risk level to receive a suggested allocation.</p>
+      </div>
+      <div class="card">
+        <h3>Projected Growth</h3>
+        <p>See simple projections and historical algorithm performance snapshots.</p>
+      </div>
+      <div class="card">
+        <h3>Implement Instantly</h3>
+        <p>Open the investing platform directly from the plan (demo embed).</p>
+      </div>
+    </section>
+
+    <section id="how" class="hero">
+      <h2>How It Works</h2>
+      <p class="muted">Three simple steps to generate your trading plan.</p>
+      <div class="grid">
+        <div class="card">
+          <h3>1. Enter Goals</h3>
+          <p>Provide investment amount, timeline, and risk tolerance.</p>
+        </div>
+        <div class="card">
+          <h3>2. Get A Plan</h3>
+          <p>The algorithm generates recommended allocations and projected returns.</p>
+        </div>
+        <div class="card">
+          <h3>3. Implement</h3>
+          <p>Open the embedded investing platform to act on your plan.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:1rem">
+        <h3>Try It (Demo)</h3>
+        <form onsubmit="event.preventDefault()">
+          <div class="form-row">
+            <div style="flex:1">
+              <label>Investment Amount</label>
+              <input type="number" placeholder="5000">
+            </div>
+            <div style="width:160px">
+              <label>Timeline (yrs)</label>
+              <input type="number" placeholder="5">
+            </div>
+            <div style="width:160px">
+              <label>Risk</label>
+              <select>
+                <option>Conservative</option>
+                <option selected>Moderate</option>
+                <option>Aggressive</option>
+              </select>
+            </div>
+          </div>
+          <p style="margin-top:.75rem"><a class="btn" href="#results">Generate My Plan</a></p>
+        </form>
+      </div>
+    </section>
+
+    <section id="results" class="grid" style="margin-top:1rem">
+      <div class="card">
+        <h3>Allocation</h3>
+        <p>Stocks: 60%<br>Bonds: 30%<br>Alternatives: 10%</p>
+      </div>
+      <div class="card">
+        <h3>Projected Value</h3>
+        <p>Estimated portfolio value after timeline: <strong>$45,230</strong></p>
+      </div>
+      <div class="card">
+        <h3>Actions</h3>
+        <p><a class="btn" href="#">Open Investing Platform</a> <a class="btn alt" href="#">Save Plan</a></p>
+      </div>
+    </section>
+
+    <section id="siteplan" class="card" style="margin-top:1.25rem;">
+      <h2>Site Plan</h2>
+      <p>This section contains the site plan details (color schema, typography, wireframe, purpose, scenarios).</p>
+      <div class="card">
+        <h3>Site Name</h3>
+        <p class="logo">TradeSmart Guide</p>
+        <p><strong>Why this name?</strong> The name conveys intelligent, strategic trading guidance that helps users make informed investment decisions while remaining approachable.</p>
+      </div>
+
+      <div class="card">
+        <h3>Purpose</h3>
+        <p>Help busy individuals create personalized stock trading plans and implement them via an embedded investing platform.</p>
+      </div>
+
+      <div class="card">
+        <h3>Color Schema & Typography</h3>
+        <p>Primary: #2C3E50 · Secondary: #3498DB · Accent: #27AE60 · Background: #ECF0F1 · Text: #34495E</p>
+        <p>Fonts: Montserrat (headings), Open Sans (body)</p>
+      </div>
+
+      <div class="card">
+        <h3>Wireframe</h3>
+        <p>Mobile and desktop layouts with hero, plan builder, results, and embedded investing iframe. Saved plans stored in localStorage.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>&copy; <span id="currentyear"></span> Timothy Whitehead | TradeSmart Guide</p>
+    <p id="lastModified" class="site-footer-meta"></p>
+  </footer>
+
+  <script src="scripts/siteplan.js"></script>
+</body>
+</html>
