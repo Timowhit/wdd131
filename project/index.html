@@ -264,15 +264,92 @@
         </div>
 
         <div id="platformEmbed" style="display:none;margin-top:1.5rem">
-          <div style="background:var(--bg);padding:1rem;border-radius:8px;margin-bottom:1rem">
-            <h4 id="selectedPlatformName" style="color:var(--primary);margin-bottom:.5rem"></h4>
-            <iframe id="platformFrame" style="width:100%;height:600px;border:2px solid var(--primary);border-radius:8px"></iframe>
-          </div>
-          <div style="text-align:center;margin-top:1rem">
-            <button id="autoSetupBtn" class="btn" style="font-size:1.1rem;padding:1rem 2rem">
-              ✨ Set Up My Portfolio Automatically
-            </button>
-            <p class="muted" style="margin-top:.5rem;font-size:.9rem">Click to authorize us to configure your selected portfolio in your account</p>
+          <div style="background:var(--bg);padding:2rem;border-radius:8px;">
+            <h4 id="selectedPlatformName" style="color:var(--primary);margin-bottom:1rem;font-size:1.3rem;text-align:center"></h4>
+            
+            <div style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1.5rem;border:2px solid var(--secondary)">
+              <h5 style="color:var(--primary);margin-bottom:0.75rem">📊 Your Selected Portfolio:</h5>
+              <p id="portfolioSummary" style="font-size:0.95rem;line-height:1.6;margin:0"></p>
+            </div>
+
+            <!-- Trading Plan Section -->
+            <div id="tradingPlanSection" style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1rem;border:2px solid var(--accent)">
+              <h5 style="color:var(--primary);margin-bottom:1rem">📋 Your Personalized Trading Plan</h5>
+              
+              <div style="background:#f8f9fa;padding:1rem;border-radius:6px;margin-bottom:1rem">
+                <strong style="color:var(--primary)">Investment Amount:</strong> $<span id="planInvestAmount"></span><br>
+                <strong style="color:var(--primary)">Portfolio Strategy:</strong> <span id="planStrategy"></span>
+              </div>
+
+              <h6 style="color:var(--secondary);margin:1rem 0 0.5rem 0">Recommended Holdings:</h6>
+              <div id="stocksList" style="margin-bottom:1rem"></div>
+
+              <div style="background:#fff3cd;padding:1rem;border-radius:6px;border-left:4px solid #ffc107;margin-bottom:1rem">
+                <strong>⚠️ Important Notes:</strong>
+                <ul style="margin:0.5rem 0 0 1.25rem;font-size:0.9rem">
+                  <li>These are market orders - prices may vary slightly</li>
+                  <li>Consider market hours (9:30 AM - 4:00 PM ET)</li>
+                  <li>Fractional shares may not be available for all stocks on all platforms</li>
+                  <li>Review all details before confirming trades</li>
+                </ul>
+              </div>
+
+              <div style="text-align:center;margin-top:1.5rem">
+                <button id="openPlatformBtn" class="btn" style="font-size:1.1rem;padding:1rem 2rem;margin-bottom:0.5rem">
+                  🚀 Open <span id="platformBtnName"></span> to Execute Trades
+                </button>
+                <br>
+                <button id="downloadPlanBtn" class="btn alt" style="font-size:1rem;padding:0.75rem 1.5rem;margin-top:0.5rem">
+                  📥 Download Trading Plan (PDF)
+                </button>
+              </div>
+            </div>
+
+            <!-- Step-by-Step Instructions -->
+            <div style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1rem">
+              <h5 style="color:var(--primary);margin-bottom:1rem">📝 Step-by-Step Instructions</h5>
+              
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 1: Log into <span id="platformNameInstructions"></span></strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">Click the button above to open your brokerage account in a new window.</p>
+              </div>
+
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 2: Navigate to Trade/Buy Page</strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">Find the "Trade" or "Buy" button, usually in the main navigation or dashboard.</p>
+              </div>
+
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 3: Enter Each Stock Symbol</strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">For each ticker listed above, search for it and select "Buy" or "Trade".</p>
+              </div>
+
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 4: Enter Quantities</strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">Enter the number of shares shown in your trading plan above. Choose "Market Order" for immediate execution.</p>
+              </div>
+
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 5: Review and Confirm</strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">Double-check all details before clicking "Submit" or "Place Order".</p>
+              </div>
+
+              <div style="margin-bottom:1rem">
+                <strong style="color:var(--secondary)">Step 6: Verify Execution</strong>
+                <p style="font-size:0.9rem;margin:0.5rem 0">Check your order history to confirm all trades were executed successfully.</p>
+              </div>
+            </div>
+
+            <!-- Risk Disclosure -->
+            <div style="background:#f8d7da;padding:1rem;border-radius:6px;border-left:4px solid #dc3545;font-size:0.85rem">
+              <strong>⚠️ RISK DISCLOSURE:</strong> Investing in securities involves risk, including possible loss of principal. Past performance does not guarantee future results. This is educational information only and not personalized investment advice. TradeSmart Guide is not a registered investment advisor. You are responsible for your own investment decisions. Always consult with a qualified financial advisor before making investment decisions.
+            </div>
+
+            <div style="text-align:center;margin-top:1.5rem">
+              <button id="markCompleteBtn" class="btn alt" style="font-size:1.1rem;padding:1rem 2rem">
+                ✅ I've Completed My Trades
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -289,33 +366,6 @@
         </p>
       </div>
     </section>
-
-    <section id="siteplan" class="card" style="margin-top:1.25rem;">
-      <h2>Site Plan</h2>
-      <p>This section contains the site plan details (color schema, typography, wireframe, purpose, scenarios).</p>
-      <div class="card">
-        <h3>Site Name</h3>
-        <p class="logo">TradeSmart Guide</p>
-        <p><strong>Why this name?</strong> The name conveys intelligent, strategic trading guidance that helps users make informed investment decisions while remaining approachable.</p>
-      </div>
-
-      <div class="card">
-        <h3>Purpose</h3>
-        <p>Help busy individuals create personalized stock trading plans and implement them via an embedded investing platform.</p>
-      </div>
-
-      <div class="card">
-        <h3>Color Schema & Typography</h3>
-        <p>Primary: #2C3E50 · Secondary: #3498DB · Accent: #27AE60 · Background: #ECF0F1 · Text: #34495E</p>
-        <p>Fonts: Montserrat (headings), Open Sans (body)</p>
-      </div>
-
-      <div class="card">
-        <h3>Wireframe</h3>
-        <p>Mobile and desktop layouts with hero, plan builder, results, and embedded investing iframe. Saved plans stored in localStorage.</p>
-      </div>
-    </section>
-
   </main>
 
   <footer>
