@@ -14,7 +14,6 @@ document.addEventListener('DOMContentLoaded', function(){
     if(hamburger && headerNav){
         hamburger.addEventListener('click', function(){
             headerNav.classList.toggle('open');
-            // Toggle icon between ☰ and ✖
             hamburger.textContent = headerNav.classList.contains('open') ? '✖' : '☰';
         });
     }
@@ -30,7 +29,6 @@ document.addEventListener('click', function(e){
         headerNav.classList.remove('open');
         hamburger.textContent = '☰';
     }
-    // close when a nav link is clicked (useful on mobile)
     if(e.target.closest && e.target.closest('header nav a')){
         headerNav.classList.remove('open');
         hamburger.textContent = '☰';
@@ -46,7 +44,6 @@ document.addEventListener('click', function(e){
         return null;
     });
 
-    // smooth scroll on click
     links.forEach(function(link){
         var href = link.getAttribute('href')||'';
         if(href.charAt(0) === '#'){
@@ -57,7 +54,6 @@ document.addEventListener('click', function(e){
                 if(el){
                     el.scrollIntoView({behavior:'smooth',block:'start'});
                 }
-                // close mobile nav after click
                 var headerNav = document.querySelector('header > nav');
                 var hamburger = document.querySelector('.hamburger');
                 if(headerNav && hamburger){ headerNav.classList.remove('open'); hamburger.textContent = '☰'; }
@@ -65,12 +61,11 @@ document.addEventListener('click', function(e){
         }
     });
 
-    // scrollspy: highlight active nav link
     var ticking = false;
     function onScroll(){
         if(ticking) return; ticking = true;
         window.requestAnimationFrame(function(){
-            var fromTop = window.scrollY + 80; // offset for header
+            var fromTop = window.scrollY + 80;
             var currentIndex = -1;
             for(var i=0;i<sections.length;i++){
                 var s = sections[i];
@@ -83,17 +78,17 @@ document.addEventListener('click', function(e){
         });
     }
     window.addEventListener('scroll', onScroll, {passive:true});
-    // run once on load
     onScroll();
 })();
 
-// Trading Plan Generator Logic
+// Trading Plan Generator Logic with localStorage
 document.addEventListener('DOMContentLoaded', function() {
     let userData = {};
     let selectedPlan = null;
     let selectedPlatform = null;
 
-    // Portfolio templates based on risk tolerance and experience
+    loadFromLocalStorage();
+
     const portfolioTemplates = {
         conservative: {
             beginner: [
@@ -217,7 +212,57 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
 
-    // Step 1: Handle Goals Form Submission
+    function saveToLocalStorage() {
+        try {
+            localStorage.setItem('tradesmartUserData', JSON.stringify(userData));
+            localStorage.setItem('tradesmartSelectedPlan', JSON.stringify(selectedPlan));
+            localStorage.setItem('tradesmartSelectedPlatform', JSON.stringify(selectedPlatform));
+        } catch (e) {
+            console.error('Error saving to localStorage:', e);
+        }
+    }
+
+    function loadFromLocalStorage() {
+        try {
+            const savedUserData = localStorage.getItem('tradesmartUserData');
+            const savedPlan = localStorage.getItem('tradesmartSelectedPlan');
+            const savedPlatform = localStorage.getItem('tradesmartSelectedPlatform');
+
+            if (savedUserData) {
+                userData = JSON.parse(savedUserData);
+                restoreFormValues();
+            }
+
+            if (savedPlan) {
+                selectedPlan = JSON.parse(savedPlan);
+            }
+
+            if (savedPlatform) {
+                selectedPlatform = JSON.parse(savedPlatform);
+            }
+        } catch (e) {
+            console.error('Error loading from localStorage:', e);
+        }
+    }
+
+    function restoreFormValues() {
+        if (userData.amount) document.getElementById('investAmount').value = userData.amount;
+        if (userData.timeline) document.getElementById('timeline').value = userData.timeline;
+        if (userData.expectedGrowth) document.getElementById('expectedGrowth').value = userData.expectedGrowth;
+        if (userData.risk) document.getElementById('riskTolerance').value = userData.risk;
+        if (userData.experience) document.getElementById('experience').value = userData.experience;
+    }
+
+    function clearLocalStorage() {
+        try {
+            localStorage.removeItem('tradesmartUserData');
+            localStorage.removeItem('tradesmartSelectedPlan');
+            localStorage.removeItem('tradesmartSelectedPlatform');
+        } catch (e) {
+            console.error('Error clearing localStorage:', e);
+        }
+    }
+
     const goalsForm = document.getElementById('goalsForm');
     if (goalsForm) {
         goalsForm.addEventListener('submit', function(e) {
@@ -231,18 +276,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 experience: document.getElementById('experience').value
             };
 
+            saveToLocalStorage();
             generatePortfolioOptions();
             
-            // Show step 2, hide step 1
             document.getElementById('step1').style.display = 'none';
             document.getElementById('step2').style.display = 'block';
-            
-            // Smooth scroll to step 2
             document.getElementById('step2').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
     }
 
-    // Generate portfolio options based on user data
     function generatePortfolioOptions() {
         const container = document.getElementById('portfolioOptions');
         container.innerHTML = '';
@@ -280,7 +322,6 @@ document.addEventListener('DOMContentLoaded', function() {
             container.appendChild(card);
         });
 
-        // Add click handlers to plan selection buttons
         document.querySelectorAll('.select-plan-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const index = parseInt(this.getAttribute('data-index'));
@@ -289,30 +330,22 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Calculate projected portfolio value
     function calculateProjectedValue(principal, years, annualRate) {
         return Math.round(principal * Math.pow(1 + (annualRate / 100), years));
     }
 
-    // Handle plan selection
     function selectPlan(plan) {
         selectedPlan = plan;
+        saveToLocalStorage();
         
-        // Hide step 2, show step 3
         document.getElementById('step2').style.display = 'none';
         document.getElementById('step3').style.display = 'block';
-        
-        // Smooth scroll to step 3
         document.getElementById('step3').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Handle platform selection
     document.querySelectorAll('.platform-card').forEach(card => {
         card.addEventListener('click', function() {
-            // Remove active class from all cards
             document.querySelectorAll('.platform-card').forEach(c => c.classList.remove('active'));
-            
-            // Add active class to selected card
             this.classList.add('active');
             
             selectedPlatform = {
@@ -320,33 +353,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 url: this.getAttribute('data-url')
             };
 
-            // Show platform information
+            saveToLocalStorage();
             showPlatformEmbed();
         });
     });
 
-    // Stock/ETF recommendations based on portfolio type
-    const portfolioStocks = {
-        stocks: [
-            { ticker: 'VTI', name: 'Vanguard Total Stock Market ETF', type: 'US Stocks' },
-            { ticker: 'VXUS', name: 'Vanguard Total International Stock ETF', type: 'International Stocks' },
-            { ticker: 'QQQ', name: 'Invesco QQQ Trust', type: 'Tech/Growth' },
-            { ticker: 'VTV', name: 'Vanguard Value ETF', type: 'Value Stocks' },
-            { ticker: 'VUG', name: 'Vanguard Growth ETF', type: 'Growth Stocks' }
-        ],
-        bonds: [
-            { ticker: 'BND', name: 'Vanguard Total Bond Market ETF', type: 'Bonds' },
-            { ticker: 'AGG', name: 'iShares Core US Aggregate Bond ETF', type: 'Bonds' },
-            { ticker: 'TLT', name: 'iShares 20+ Year Treasury Bond ETF', type: 'Long-term Bonds' }
-        ],
-        alternatives: [
-            { ticker: 'VNQ', name: 'Vanguard Real Estate ETF', type: 'REITs' },
-            { ticker: 'GLD', name: 'SPDR Gold Shares', type: 'Gold' },
-            { ticker: 'DBC', name: 'Invesco DB Commodity Index Tracking Fund', type: 'Commodities' }
-        ]
-    };
-
-    // Generate stock recommendations based on portfolio allocation
     function generateStockRecommendations(amount, stocksPct, bondsPct, altsPct) {
         const recommendations = [];
         
@@ -354,7 +365,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const bondAmount = amount * (bondsPct / 100);
         const altAmount = amount * (altsPct / 100);
         
-        // Main stock holding (60% of stock allocation)
         if (stockAmount > 0) {
             recommendations.push({
                 ticker: 'VTI',
@@ -363,7 +373,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 percentage: stocksPct * 0.6
             });
             
-            // International stocks (40% of stock allocation)
             recommendations.push({
                 ticker: 'VXUS',
                 name: 'Vanguard Total International Stock ETF',
@@ -372,7 +381,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Bond holding
         if (bondAmount > 0) {
             recommendations.push({
                 ticker: 'BND',
@@ -382,7 +390,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
-        // Alternative holdings
         if (altAmount > 0) {
             recommendations.push({
                 ticker: 'VNQ',
@@ -395,7 +402,6 @@ document.addEventListener('DOMContentLoaded', function() {
         return recommendations;
     }
 
-    // Show platform information and trading plan
     function showPlatformEmbed() {
         const embedDiv = document.getElementById('platformEmbed');
         const platformName = document.getElementById('selectedPlatformName');
@@ -407,18 +413,15 @@ document.addEventListener('DOMContentLoaded', function() {
         platformBtnName.textContent = selectedPlatform.name;
         platformNameInstructions.textContent = selectedPlatform.name;
         
-        // Show portfolio summary
         portfolioSummary.innerHTML = `
             <strong>${selectedPlan.name}</strong><br>
             Allocation: ${selectedPlan.stocks}% Stocks, ${selectedPlan.bonds}% Bonds, ${selectedPlan.alternatives}% Alternatives<br>
             <span style="font-size:0.9rem;color:#666">${selectedPlan.details}</span>
         `;
         
-        // Set investment amount
         document.getElementById('planInvestAmount').textContent = userData.amount.toLocaleString();
         document.getElementById('planStrategy').textContent = selectedPlan.name;
         
-        // Generate stock recommendations
         const recommendations = generateStockRecommendations(
             userData.amount,
             selectedPlan.stocks,
@@ -426,10 +429,9 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedPlan.alternatives
         );
         
-        // Display stocks list
         const stocksList = document.getElementById('stocksList');
         stocksList.innerHTML = recommendations.map((stock, index) => {
-            const shares = Math.floor(stock.amount / 100); // Rough estimate (assumes ~$100/share)
+            const shares = Math.floor(stock.amount / 100);
             const sharesToBuy = shares > 0 ? shares : (stock.amount / 100).toFixed(2);
             
             return `
@@ -445,7 +447,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                         <div style="text-align:right">
                             <div style="font-size:1.2rem;color:var(--accent);font-weight:600">
-                                ${stock.amount.toFixed(2)}
+                                $${stock.amount.toFixed(2)}
                             </div>
                             <div style="font-size:0.85rem;color:#666">
                                 ~${sharesToBuy} shares
@@ -458,13 +460,11 @@ document.addEventListener('DOMContentLoaded', function() {
         
         embedDiv.style.display = 'block';
         
-        // Smooth scroll to embed
         setTimeout(() => {
             embedDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }, 100);
     }
 
-    // Handle opening platform in new window
     document.addEventListener('click', function(e) {
         if (e.target.id === 'openPlatformBtn' || e.target.closest('#openPlatformBtn')) {
             if (selectedPlatform) {
@@ -472,18 +472,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Handle download trading plan
         if (e.target.id === 'downloadPlanBtn' || e.target.closest('#downloadPlanBtn')) {
             downloadTradingPlan();
         }
         
-        // Handle mark complete
         if (e.target.id === 'markCompleteBtn' || e.target.closest('#markCompleteBtn')) {
             completeSetup();
         }
     });
 
-    // Download trading plan as text file (since we can't generate PDF in browser without libraries)
     function downloadTradingPlan() {
         const recommendations = generateStockRecommendations(
             userData.amount,
@@ -501,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function() {
         planText += `PORTFOLIO DETAILS\n`;
         planText += `${'-'.repeat(60)}\n`;
         planText += `Strategy: ${selectedPlan.name}\n`;
-        planText += `Investment Amount: ${userData.amount.toLocaleString()}\n`;
+        planText += `Investment Amount: $${userData.amount.toLocaleString()}\n`;
         planText += `Timeline: ${userData.timeline} years\n`;
         planText += `Expected Annual Return: ${userData.expectedGrowth}%\n`;
         planText += `Risk Level: ${userData.risk.charAt(0).toUpperCase() + userData.risk.slice(1)}\n`;
@@ -519,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const shares = Math.floor(stock.amount / 100);
             const sharesToBuy = shares > 0 ? shares : (stock.amount / 100).toFixed(2);
             planText += `\n${index + 1}. ${stock.ticker} - ${stock.name}\n`;
-            planText += `   Amount: ${stock.amount.toFixed(2)} (${stock.percentage.toFixed(1)}% of portfolio)\n`;
+            planText += `   Amount: $${stock.amount.toFixed(2)} (${stock.percentage.toFixed(1)}% of portfolio)\n`;
             planText += `   Approximate Shares: ${sharesToBuy}\n`;
             planText += `   Order Type: Market Order\n`;
         });
@@ -538,8 +535,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         planText += `PROJECTED RETURNS\n`;
         planText += `${'-'.repeat(60)}\n`;
-        planText += `Projected Value (${userData.timeline} years): ${projectedValue.toLocaleString()}\n`;
-        planText += `Total Gain: ${(projectedValue - userData.amount).toLocaleString()}\n\n`;
+        planText += `Projected Value (${userData.timeline} years): $${projectedValue.toLocaleString()}\n`;
+        planText += `Total Gain: $${(projectedValue - userData.amount).toLocaleString()}\n\n`;
         
         planText += `RISK DISCLOSURE\n`;
         planText += `${'-'.repeat(60)}\n`;
@@ -553,7 +550,6 @@ document.addEventListener('DOMContentLoaded', function() {
         planText += `${'='.repeat(60)}\n`;
         planText += `End of Trading Plan\n`;
         
-        // Create and download file
         const blob = new Blob([planText], { type: 'text/plain' });
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -565,15 +561,6 @@ document.addEventListener('DOMContentLoaded', function() {
         window.URL.revokeObjectURL(url);
     }
 
-    // Handle automatic portfolio setup
-    const autoSetupBtn = document.getElementById('autoSetupBtn');
-    if (autoSetupBtn) {
-        autoSetupBtn.addEventListener('click', function() {
-            // This button has been removed in the new design
-        });
-    }
-
-    // Complete setup and show results
     function completeSetup() {
         const projectedValue = calculateProjectedValue(userData.amount, userData.timeline, userData.expectedGrowth);
         const totalGain = projectedValue - userData.amount;
@@ -596,7 +583,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <strong>Platform:</strong><br>${selectedPlatform.name}
                 </div>
                 <div>
-                    <strong>Initial Investment:</strong><br>${userData.amount.toLocaleString()}
+                    <strong>Initial Investment:</strong><br>$${userData.amount.toLocaleString()}
                 </div>
                 <div>
                     <strong>Timeline:</strong><br>${userData.timeline} years
@@ -613,11 +600,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div>
                         <strong>Projected Value:</strong><br>
-                        <span style="color:var(--accent);font-size:1.2rem">${projectedValue.toLocaleString()}</span>
+                        <span style="color:var(--accent);font-size:1.2rem">$${projectedValue.toLocaleString()}</span>
                     </div>
                     <div>
                         <strong>Total Gain:</strong><br>
-                        <span style="color:var(--accent)">${totalGain.toLocaleString()}</span>
+                        <span style="color:var(--accent)">$${totalGain.toLocaleString()}</span>
                     </div>
                 </div>
             </div>
@@ -627,24 +614,21 @@ document.addEventListener('DOMContentLoaded', function() {
                     const shares = Math.floor(stock.amount / 100);
                     const sharesToBuy = shares > 0 ? shares : (stock.amount / 100).toFixed(2);
                     return `<div style="font-size:0.9rem;margin-bottom:0.25rem">
-                        <strong>${stock.ticker}</strong>: ~${sharesToBuy} shares (${stock.amount.toFixed(2)})
+                        <strong>${stock.ticker}</strong>: ~${sharesToBuy} shares ($${stock.amount.toFixed(2)})
                     </div>`;
                 }).join('')}
             </div>
         `;
 
-        // Hide step 3, show results
         document.getElementById('step3').style.display = 'none';
         document.getElementById('results').style.display = 'block';
-        
-        // Smooth scroll to results
         document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // Reset form when starting over
     document.querySelectorAll('a[href="#home"]').forEach(link => {
         link.addEventListener('click', function() {
-            // Reset all forms and visibility
+            clearLocalStorage();
+            
             const form = document.getElementById('goalsForm');
             if (form) form.reset();
             
@@ -660,22 +644,13 @@ document.addEventListener('DOMContentLoaded', function() {
             if (results) results.style.display = 'none';
             if (platformEmbed) platformEmbed.style.display = 'none';
             
-            // Reset data
             userData = {};
             selectedPlan = null;
             selectedPlatform = null;
             
-            // Re-enable and reset buttons
-            const setupBtn = document.getElementById('autoSetupBtn');
-            const completeBtn = document.getElementById('markCompleteBtn');
-            if (setupBtn) {
-                setupBtn.disabled = false;
-                setupBtn.textContent = '✨ I\'ve Logged In - Set Up My Portfolio';
-            }
-            if (completeBtn) {
-                completeBtn.disabled = false;
-                completeBtn.textContent = '✅ I\'ve Completed My Trades';
-            }
+            document.querySelectorAll('.platform-card').forEach(card => {
+                card.classList.remove('active');
+            });
         });
     });
 });

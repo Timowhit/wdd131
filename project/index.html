@@ -3,118 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Build a personalized trading plan based on your goals, timeline, and risk tolerance with TradeSmart Guide">
   <title>TradeSmart Guide</title>
   <link rel="stylesheet" href="styles/siteplan.css">
-  <style>
-    /* Portfolio option cards */
-    .portfolio-option {
-      border: 2px solid transparent;
-      transition: all 0.2s ease;
-      cursor: default;
-    }
-    
-    .portfolio-option:hover {
-      border-color: var(--secondary);
-      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.2);
-    }
-
-    /* Allocation bar visualization */
-    .allocation-bar {
-      display: flex;
-      width: 100%;
-      height: 24px;
-      border-radius: 6px;
-      overflow: hidden;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .allocation-segment {
-      display: inline-block;
-      height: 100%;
-      transition: all 0.3s ease;
-    }
-
-    .allocation-segment:hover {
-      opacity: 0.8;
-    }
-
-    /* Platform selector grid */
-    .platform-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
-    }
-
-    .platform-card {
-      background: var(--white);
-      border: 2px solid #e0e0e0;
-      border-radius: 12px;
-      padding: 1.5rem 1rem;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .platform-card:hover {
-      border-color: var(--secondary);
-      transform: translateY(-4px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    }
-
-    .platform-card.active {
-      border-color: var(--accent);
-      background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(52, 152, 219, 0.1));
-      box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
-    }
-
-    .platform-icon {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .platform-card h4 {
-      color: var(--primary);
-      font-size: 1.1rem;
-      margin: 0.5rem 0 0.25rem 0;
-    }
-
-    .platform-card p {
-      font-size: 0.85rem;
-      color: #666;
-      margin: 0;
-    }
-
-    /* Button styling */
-    .select-plan-btn {
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-
-    /* Form labels */
-    label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 0.25rem;
-      color: var(--primary);
-      font-size: 0.95rem;
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .platform-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .form-row {
-        flex-direction: column;
-      }
-      
-      .form-row > div {
-        width: 100% !important;
-      }
-    }
-  </style>
 </head>
 <body>
   <header>
@@ -170,28 +61,27 @@
         </div>
       </div>
 
-      <!-- Step 1: Set Your Goals -->
-      <div id="step1" class="card" style="margin-top:1rem">
+      <div id="step1" class="card step-card">
         <h3>Step 1: Set Your Goals</h3>
         <form id="goalsForm">
           <div class="form-row">
-            <div style="flex:1">
-              <label>Investment Amount ($)</label>
+            <div class="form-field-flex">
+              <label for="investAmount">Investment Amount ($)</label>
               <input type="number" id="investAmount" placeholder="5000" min="100" required>
             </div>
-            <div style="flex:1">
-              <label>Investment Timeline (years)</label>
+            <div class="form-field-flex">
+              <label for="timeline">Investment Timeline (years)</label>
               <input type="number" id="timeline" placeholder="5" min="1" max="50" required>
             </div>
           </div>
           
-          <div class="form-row" style="margin-top:1rem">
-            <div style="flex:1">
-              <label>Expected Annual Growth (%)</label>
+          <div class="form-row form-row-margin">
+            <div class="form-field-flex">
+              <label for="expectedGrowth">Expected Annual Growth (%)</label>
               <input type="number" id="expectedGrowth" placeholder="8" min="0" max="30" step="0.5" required>
             </div>
-            <div style="flex:1">
-              <label>Risk Tolerance</label>
+            <div class="form-field-flex">
+              <label for="riskTolerance">Risk Tolerance</label>
               <select id="riskTolerance" required>
                 <option value="">Select...</option>
                 <option value="conservative">Conservative - Preserve capital</option>
@@ -201,9 +91,9 @@
             </div>
           </div>
 
-          <div class="form-row" style="margin-top:1rem">
-            <div style="flex:1">
-              <label>Investment Experience</label>
+          <div class="form-row form-row-margin">
+            <div class="form-field-flex">
+              <label for="experience">Investment Experience</label>
               <select id="experience" required>
                 <option value="">Select your experience level...</option>
                 <option value="beginner">Beginner - New to investing</option>
@@ -214,21 +104,19 @@
             </div>
           </div>
 
-          <p style="margin-top:1rem"><button type="submit" class="btn">Generate My Plans</button></p>
+          <p class="button-row"><button type="submit" class="btn">Generate My Plans</button></p>
         </form>
       </div>
 
-      <!-- Step 2: Get A Plan (hidden initially) -->
-      <div id="step2" class="card" style="margin-top:1rem;display:none">
+      <div id="step2" class="card step-card step-hidden">
         <h3>Step 2: Choose Your Portfolio Plan</h3>
-        <p class="muted" style="margin-bottom:1rem">Based on your goals, here are personalized portfolio options. Select the one that best suits your needs.</p>
+        <p class="muted step-description">Based on your goals, here are personalized portfolio options. Select the one that best suits your needs.</p>
         <div id="portfolioOptions" class="grid"></div>
       </div>
 
-      <!-- Step 3: Implement (hidden initially) -->
-      <div id="step3" class="card" style="margin-top:1rem;display:none">
+      <div id="step3" class="card step-card step-hidden">
         <h3>Step 3: Choose Your Trading Platform</h3>
-        <p class="muted" style="margin-bottom:1rem">Select your preferred platform to implement your investment plan.</p>
+        <p class="muted step-description">Select your preferred platform to implement your investment plan.</p>
         
         <div id="platformSelector" class="platform-grid">
           <div class="platform-card" data-platform="robinhood" data-url="https://robinhood.com">
@@ -263,30 +151,29 @@
           </div>
         </div>
 
-        <div id="platformEmbed" style="display:none;margin-top:1.5rem">
-          <div style="background:var(--bg);padding:2rem;border-radius:8px;">
-            <h4 id="selectedPlatformName" style="color:var(--primary);margin-bottom:1rem;font-size:1.3rem;text-align:center"></h4>
+        <div id="platformEmbed" class="platform-embed-hidden">
+          <div class="platform-embed-wrapper">
+            <h4 id="selectedPlatformName" class="platform-title"></h4>
             
-            <div style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1.5rem;border:2px solid var(--secondary)">
-              <h5 style="color:var(--primary);margin-bottom:0.75rem">📊 Your Selected Portfolio:</h5>
-              <p id="portfolioSummary" style="font-size:0.95rem;line-height:1.6;margin:0"></p>
+            <div class="portfolio-summary-box">
+              <h5 class="section-title">📊 Your Selected Portfolio:</h5>
+              <p id="portfolioSummary" class="portfolio-summary-text"></p>
             </div>
 
-            <!-- Trading Plan Section -->
-            <div id="tradingPlanSection" style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1rem;border:2px solid var(--accent)">
-              <h5 style="color:var(--primary);margin-bottom:1rem">📋 Your Personalized Trading Plan</h5>
+            <div id="tradingPlanSection" class="trading-plan-section">
+              <h5 class="section-title">📋 Your Personalized Trading Plan</h5>
               
-              <div style="background:#f8f9fa;padding:1rem;border-radius:6px;margin-bottom:1rem">
-                <strong style="color:var(--primary)">Investment Amount:</strong> $<span id="planInvestAmount"></span><br>
-                <strong style="color:var(--primary)">Portfolio Strategy:</strong> <span id="planStrategy"></span>
+              <div class="plan-details-box">
+                <strong class="detail-label">Investment Amount:</strong> $<span id="planInvestAmount"></span><br>
+                <strong class="detail-label">Portfolio Strategy:</strong> <span id="planStrategy"></span>
               </div>
 
-              <h6 style="color:var(--secondary);margin:1rem 0 0.5rem 0">Recommended Holdings:</h6>
-              <div id="stocksList" style="margin-bottom:1rem"></div>
+              <h6 class="stocks-header">Recommended Holdings:</h6>
+              <div id="stocksList" class="stocks-list"></div>
 
-              <div style="background:#fff3cd;padding:1rem;border-radius:6px;border-left:4px solid #ffc107;margin-bottom:1rem">
+              <div class="warning-box">
                 <strong>⚠️ Important Notes:</strong>
-                <ul style="margin:0.5rem 0 0 1.25rem;font-size:0.9rem">
+                <ul class="warning-list">
                   <li>These are market orders - prices may vary slightly</li>
                   <li>Consider market hours (9:30 AM - 4:00 PM ET)</li>
                   <li>Fractional shares may not be available for all stocks on all platforms</li>
@@ -294,59 +181,57 @@
                 </ul>
               </div>
 
-              <div style="text-align:center;margin-top:1.5rem">
-                <button id="openPlatformBtn" class="btn" style="font-size:1.1rem;padding:1rem 2rem;margin-bottom:0.5rem">
+              <div class="action-buttons">
+                <button id="openPlatformBtn" class="btn btn-large">
                   🚀 Open <span id="platformBtnName"></span> to Execute Trades
                 </button>
                 <br>
-                <button id="downloadPlanBtn" class="btn alt" style="font-size:1rem;padding:0.75rem 1.5rem;margin-top:0.5rem">
+                <button id="downloadPlanBtn" class="btn alt btn-medium">
                   📥 Download Trading Plan (PDF)
                 </button>
               </div>
             </div>
 
-            <!-- Step-by-Step Instructions -->
-            <div style="background:white;padding:1.5rem;border-radius:8px;margin-bottom:1rem">
-              <h5 style="color:var(--primary);margin-bottom:1rem">📝 Step-by-Step Instructions</h5>
+            <div class="instructions-section">
+              <h5 class="section-title">📝 Step-by-Step Instructions</h5>
               
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 1: Log into <span id="platformNameInstructions"></span></strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">Click the button above to open your brokerage account in a new window.</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 1: Log into <span id="platformNameInstructions"></span></strong>
+                <p class="step-text">Click the button above to open your brokerage account in a new window.</p>
               </div>
 
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 2: Navigate to Trade/Buy Page</strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">Find the "Trade" or "Buy" button, usually in the main navigation or dashboard.</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 2: Navigate to Trade/Buy Page</strong>
+                <p class="step-text">Find the "Trade" or "Buy" button, usually in the main navigation or dashboard.</p>
               </div>
 
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 3: Enter Each Stock Symbol</strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">For each ticker listed above, search for it and select "Buy" or "Trade".</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 3: Enter Each Stock Symbol</strong>
+                <p class="step-text">For each ticker listed above, search for it and select "Buy" or "Trade".</p>
               </div>
 
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 4: Enter Quantities</strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">Enter the number of shares shown in your trading plan above. Choose "Market Order" for immediate execution.</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 4: Enter Quantities</strong>
+                <p class="step-text">Enter the number of shares shown in your trading plan above. Choose "Market Order" for immediate execution.</p>
               </div>
 
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 5: Review and Confirm</strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">Double-check all details before clicking "Submit" or "Place Order".</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 5: Review and Confirm</strong>
+                <p class="step-text">Double-check all details before clicking "Submit" or "Place Order".</p>
               </div>
 
-              <div style="margin-bottom:1rem">
-                <strong style="color:var(--secondary)">Step 6: Verify Execution</strong>
-                <p style="font-size:0.9rem;margin:0.5rem 0">Check your order history to confirm all trades were executed successfully.</p>
+              <div class="instruction-step">
+                <strong class="step-label">Step 6: Verify Execution</strong>
+                <p class="step-text">Check your order history to confirm all trades were executed successfully.</p>
               </div>
             </div>
 
-            <!-- Risk Disclosure -->
-            <div style="background:#f8d7da;padding:1rem;border-radius:6px;border-left:4px solid #dc3545;font-size:0.85rem">
+            <div class="risk-disclosure">
               <strong>⚠️ RISK DISCLOSURE:</strong> Investing in securities involves risk, including possible loss of principal. Past performance does not guarantee future results. This is educational information only and not personalized investment advice. TradeSmart Guide is not a registered investment advisor. You are responsible for your own investment decisions. Always consult with a qualified financial advisor before making investment decisions.
             </div>
 
-            <div style="text-align:center;margin-top:1.5rem">
-              <button id="markCompleteBtn" class="btn alt" style="font-size:1.1rem;padding:1rem 2rem">
+            <div class="complete-button-wrapper">
+              <button id="markCompleteBtn" class="btn alt btn-large">
                 ✅ I've Completed My Trades
               </button>
             </div>
@@ -355,12 +240,12 @@
       </div>
     </section>
 
-    <section id="results" style="margin-top:1rem;display:none">
+    <section id="results" class="results-section">
       <div class="card">
         <h3>🎉 Setup Complete!</h3>
         <p>Your portfolio has been configured and is ready to start growing. You can now manage your investments directly through your chosen platform.</p>
-        <div id="finalSummary" style="margin-top:1rem;padding:1rem;background:var(--bg);border-radius:8px"></div>
-        <p style="margin-top:1rem">
+        <div id="finalSummary" class="final-summary"></div>
+        <p class="results-actions">
           <a class="btn" href="#home">Create Another Plan</a>
           <button class="btn alt" onclick="window.print()">Print Plan Summary</button>
         </p>
