@@ -5,6 +5,116 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>TradeSmart Guide</title>
   <link rel="stylesheet" href="styles/siteplan.css">
+  <style>
+    /* Portfolio option cards */
+    .portfolio-option {
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      cursor: default;
+    }
+    
+    .portfolio-option:hover {
+      border-color: var(--secondary);
+      box-shadow: 0 6px 20px rgba(52, 152, 219, 0.2);
+    }
+
+    /* Allocation bar visualization */
+    .allocation-bar {
+      display: flex;
+      width: 100%;
+      height: 24px;
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .allocation-segment {
+      display: inline-block;
+      height: 100%;
+      transition: all 0.3s ease;
+    }
+
+    .allocation-segment:hover {
+      opacity: 0.8;
+    }
+
+    /* Platform selector grid */
+    .platform-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .platform-card {
+      background: var(--white);
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .platform-card:hover {
+      border-color: var(--secondary);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+
+    .platform-card.active {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(39, 174, 96, 0.1), rgba(52, 152, 219, 0.1));
+      box-shadow: 0 8px 20px rgba(39, 174, 96, 0.3);
+    }
+
+    .platform-icon {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .platform-card h4 {
+      color: var(--primary);
+      font-size: 1.1rem;
+      margin: 0.5rem 0 0.25rem 0;
+    }
+
+    .platform-card p {
+      font-size: 0.85rem;
+      color: #666;
+      margin: 0;
+    }
+
+    /* Button styling */
+    .select-plan-btn {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    /* Form labels */
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--primary);
+      font-size: 0.95rem;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .platform-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .form-row {
+        flex-direction: column;
+      }
+      
+      .form-row > div {
+        width: 100% !important;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -42,7 +152,7 @@
       </div>
     </section>
 
-<section id="how" class="hero">
+    <section id="how" class="hero">
       <h2>How It Works</h2>
       <p class="muted">Three simple steps to generate your trading plan.</p>
       <div class="grid">
@@ -179,6 +289,33 @@
         </p>
       </div>
     </section>
+
+    <section id="siteplan" class="card" style="margin-top:1.25rem;">
+      <h2>Site Plan</h2>
+      <p>This section contains the site plan details (color schema, typography, wireframe, purpose, scenarios).</p>
+      <div class="card">
+        <h3>Site Name</h3>
+        <p class="logo">TradeSmart Guide</p>
+        <p><strong>Why this name?</strong> The name conveys intelligent, strategic trading guidance that helps users make informed investment decisions while remaining approachable.</p>
+      </div>
+
+      <div class="card">
+        <h3>Purpose</h3>
+        <p>Help busy individuals create personalized stock trading plans and implement them via an embedded investing platform.</p>
+      </div>
+
+      <div class="card">
+        <h3>Color Schema & Typography</h3>
+        <p>Primary: #2C3E50 · Secondary: #3498DB · Accent: #27AE60 · Background: #ECF0F1 · Text: #34495E</p>
+        <p>Fonts: Montserrat (headings), Open Sans (body)</p>
+      </div>
+
+      <div class="card">
+        <h3>Wireframe</h3>
+        <p>Mobile and desktop layouts with hero, plan builder, results, and embedded investing iframe. Saved plans stored in localStorage.</p>
+      </div>
+    </section>
+
   </main>
 
   <footer>
