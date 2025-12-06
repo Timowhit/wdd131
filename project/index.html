@@ -189,6 +189,10 @@
                 <button id="downloadPlanBtn" class="btn alt btn-medium">
                   📥 Download Trading Plan (PDF)
                 </button>
+                <br>
+                <button id="autoTradeBtn" class="btn auto-trade-btn btn-medium">
+                  🤖 Auto Trade
+                </button>
               </div>
             </div>
 
@@ -253,11 +257,138 @@
     </section>
   </main>
 
+  <!-- Auto Trade Modal -->
+  <div id="autoTradeModal" class="modal-overlay">
+    <div class="modal-container">
+      <div class="modal-header">
+        <h2>🤖 Auto Trade Setup</h2>
+        <button id="closeAutoTradeModal" class="modal-close">&times;</button>
+      </div>
+      
+      <div id="autoTradeSetup" class="modal-content">
+        <div class="setup-warning">
+          <strong>⚠️ Educational Simulation</strong>
+          <p>This is a simulation of the trading bot for educational purposes. Configure your settings below to see how the bot would operate.</p>
+        </div>
+
+        <form id="autoTradeForm">
+          <div class="config-section">
+            <h4>🔐 Robinhood Credentials</h4>
+            <p class="config-note">These are stored locally and used only for simulation display.</p>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="rhUsername">Robinhood Email</label>
+                <input type="email" id="rhUsername" placeholder="your_email@example.com" required>
+              </div>
+              <div class="form-field-flex">
+                <label for="rhPassword">Robinhood Password</label>
+                <input type="password" id="rhPassword" placeholder="••••••••" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-section">
+            <h4>📈 Stocks to Trade</h4>
+            <p class="config-note">Enter stock ticker symbols separated by commas.</p>
+            <div class="form-row">
+              <div class="form-field-flex" style="flex: 1;">
+                <label for="stockSymbols">Stock Symbols</label>
+                <input type="text" id="stockSymbols" placeholder="QQQ, SPY, VOO, TSLA, AAPL" value="QQQ, SPY, VOO, TSLA, AAPL" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="config-section">
+            <h4>⚙️ Trading Parameters</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="tradingBuffer">Trading Buffer (%)</label>
+                <input type="number" id="tradingBuffer" value="0.2" min="0.1" max="5" step="0.1" required>
+                <span class="field-hint">Lower = more trades, Higher = fewer trades</span>
+              </div>
+              <div class="form-field-flex">
+                <label for="smaWindow">SMA Window (periods)</label>
+                <input type="number" id="smaWindow" value="12" min="5" max="50" required>
+                <span class="field-hint">12 = 1 hour of 5-min intervals</span>
+              </div>
+            </div>
+            <div class="form-row form-row-margin">
+              <div class="form-field-flex">
+                <label for="maxCashPerStock">Max Cash Per Stock (%)</label>
+                <input type="number" id="maxCashPerStock" value="10" min="1" max="50" required>
+              </div>
+              <div class="form-field-flex">
+                <label for="checkInterval">Check Interval (seconds)</label>
+                <input type="number" id="checkInterval" value="30" min="10" max="300" required>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" id="downloadConfigBtn" class="btn alt">
+              📥 Download Config Files
+            </button>
+            <button type="submit" class="btn">
+              ▶️ Start Simulation
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div id="autoTradeSimulation" class="modal-content" style="display: none;">
+        <div class="simulation-header">
+          <div class="sim-status">
+            <span class="status-dot"></span>
+            <span id="simStatusText">Running Simulation...</span>
+          </div>
+          <button id="stopSimulation" class="btn btn-small btn-danger">⏹ Stop</button>
+        </div>
+
+        <div class="simulation-stats">
+          <div class="stat-card">
+            <span class="stat-label">Account Equity</span>
+            <span id="simEquity" class="stat-value">$10,000.00</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Available Cash</span>
+            <span id="simCash" class="stat-value">$10,000.00</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Today's P/L</span>
+            <span id="simPL" class="stat-value profit">+$0.00</span>
+          </div>
+        </div>
+
+        <div class="simulation-chart">
+          <canvas id="priceChart"></canvas>
+        </div>
+
+        <div class="simulation-log">
+          <h5>📋 Trading Log</h5>
+          <div id="tradingLog" class="log-container">
+            <div class="log-entry info">Initializing trading bot...</div>
+          </div>
+        </div>
+
+        <div class="holdings-section">
+          <h5>📊 Current Holdings</h5>
+          <div id="holdingsTable" class="holdings-container"></div>
+        </div>
+
+        <div class="sim-actions">
+          <button id="backToSetup" class="btn alt">← Back to Setup</button>
+          <button id="exportLog" class="btn">📥 Export Log</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <footer>
     <p>&copy; <span id="currentyear"></span> Timothy Whitehead | TradeSmart Guide</p>
     <p id="lastModified" class="site-footer-meta"></p>
   </footer>
 
   <script src="scripts/siteplan.js"></script>
+  <script src="scripts/autotrade.js"></script>
 </body>
 </html>
