@@ -42,91 +42,143 @@
       </div>
     </section>
 
-    <section id="how" class="hero">
+<section id="how" class="hero">
       <h2>How It Works</h2>
       <p class="muted">Three simple steps to generate your trading plan.</p>
       <div class="grid">
         <div class="card">
-          <h3>1. Enter Goals</h3>
-          <p>Provide investment amount, timeline, and risk tolerance.</p>
+          <h3>1. Set Your Goals</h3>
+          <p>Answer questions about your investment timeline, growth expectations, risk tolerance, and experience.</p>
         </div>
         <div class="card">
           <h3>2. Get A Plan</h3>
-          <p>The algorithm generates recommended allocations and projected returns.</p>
+          <p>Review personalized portfolio options and select the one that best fits your needs.</p>
         </div>
         <div class="card">
           <h3>3. Implement</h3>
-          <p>Open the embedded investing platform to act on your plan.</p>
+          <p>Choose your preferred trading platform and let us set up your portfolio automatically.</p>
         </div>
       </div>
 
-      <div class="card" style="margin-top:1rem">
-        <h3>Try It (Demo)</h3>
-        <form onsubmit="event.preventDefault()">
+      <!-- Step 1: Set Your Goals -->
+      <div id="step1" class="card" style="margin-top:1rem">
+        <h3>Step 1: Set Your Goals</h3>
+        <form id="goalsForm">
           <div class="form-row">
             <div style="flex:1">
-              <label>Investment Amount</label>
-              <input type="number" placeholder="5000">
+              <label>Investment Amount ($)</label>
+              <input type="number" id="investAmount" placeholder="5000" min="100" required>
             </div>
-            <div style="width:160px">
-              <label>Timeline (yrs)</label>
-              <input type="number" placeholder="5">
+            <div style="flex:1">
+              <label>Investment Timeline (years)</label>
+              <input type="number" id="timeline" placeholder="5" min="1" max="50" required>
             </div>
-            <div style="width:160px">
-              <label>Risk</label>
-              <select>
-                <option>Conservative</option>
-                <option selected>Moderate</option>
-                <option>Aggressive</option>
+          </div>
+          
+          <div class="form-row" style="margin-top:1rem">
+            <div style="flex:1">
+              <label>Expected Annual Growth (%)</label>
+              <input type="number" id="expectedGrowth" placeholder="8" min="0" max="30" step="0.5" required>
+            </div>
+            <div style="flex:1">
+              <label>Risk Tolerance</label>
+              <select id="riskTolerance" required>
+                <option value="">Select...</option>
+                <option value="conservative">Conservative - Preserve capital</option>
+                <option value="moderate">Moderate - Balanced approach</option>
+                <option value="aggressive">Aggressive - Maximum growth</option>
               </select>
             </div>
           </div>
-          <p style="margin-top:.75rem"><a class="btn" href="#results">Generate My Plan</a></p>
+
+          <div class="form-row" style="margin-top:1rem">
+            <div style="flex:1">
+              <label>Investment Experience</label>
+              <select id="experience" required>
+                <option value="">Select your experience level...</option>
+                <option value="beginner">Beginner - New to investing</option>
+                <option value="intermediate">Intermediate - Some experience</option>
+                <option value="advanced">Advanced - Experienced investor</option>
+                <option value="expert">Expert - Professional level</option>
+              </select>
+            </div>
+          </div>
+
+          <p style="margin-top:1rem"><button type="submit" class="btn">Generate My Plans</button></p>
         </form>
       </div>
+
+      <!-- Step 2: Get A Plan (hidden initially) -->
+      <div id="step2" class="card" style="margin-top:1rem;display:none">
+        <h3>Step 2: Choose Your Portfolio Plan</h3>
+        <p class="muted" style="margin-bottom:1rem">Based on your goals, here are personalized portfolio options. Select the one that best suits your needs.</p>
+        <div id="portfolioOptions" class="grid"></div>
+      </div>
+
+      <!-- Step 3: Implement (hidden initially) -->
+      <div id="step3" class="card" style="margin-top:1rem;display:none">
+        <h3>Step 3: Choose Your Trading Platform</h3>
+        <p class="muted" style="margin-bottom:1rem">Select your preferred platform to implement your investment plan.</p>
+        
+        <div id="platformSelector" class="platform-grid">
+          <div class="platform-card" data-platform="robinhood" data-url="https://robinhood.com">
+            <div class="platform-icon">📱</div>
+            <h4>Robinhood</h4>
+            <p>Commission-free trading</p>
+          </div>
+          <div class="platform-card" data-platform="fidelity" data-url="https://www.fidelity.com">
+            <div class="platform-icon">🏦</div>
+            <h4>Fidelity</h4>
+            <p>Full-service brokerage</p>
+          </div>
+          <div class="platform-card" data-platform="schwab" data-url="https://www.schwab.com">
+            <div class="platform-icon">💼</div>
+            <h4>Charles Schwab</h4>
+            <p>Comprehensive investing</p>
+          </div>
+          <div class="platform-card" data-platform="etrade" data-url="https://us.etrade.com">
+            <div class="platform-icon">📊</div>
+            <h4>E*TRADE</h4>
+            <p>Advanced tools</p>
+          </div>
+          <div class="platform-card" data-platform="vanguard" data-url="https://www.vanguard.com">
+            <div class="platform-icon">⭐</div>
+            <h4>Vanguard</h4>
+            <p>Low-cost investing</p>
+          </div>
+          <div class="platform-card" data-platform="webull" data-url="https://www.webull.com">
+            <div class="platform-icon">📈</div>
+            <h4>Webull</h4>
+            <p>Modern interface</p>
+          </div>
+        </div>
+
+        <div id="platformEmbed" style="display:none;margin-top:1.5rem">
+          <div style="background:var(--bg);padding:1rem;border-radius:8px;margin-bottom:1rem">
+            <h4 id="selectedPlatformName" style="color:var(--primary);margin-bottom:.5rem"></h4>
+            <iframe id="platformFrame" style="width:100%;height:600px;border:2px solid var(--primary);border-radius:8px"></iframe>
+          </div>
+          <div style="text-align:center;margin-top:1rem">
+            <button id="autoSetupBtn" class="btn" style="font-size:1.1rem;padding:1rem 2rem">
+              ✨ Set Up My Portfolio Automatically
+            </button>
+            <p class="muted" style="margin-top:.5rem;font-size:.9rem">Click to authorize us to configure your selected portfolio in your account</p>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="results" class="grid" style="margin-top:1rem">
+    <section id="results" style="margin-top:1rem;display:none">
       <div class="card">
-        <h3>Allocation</h3>
-        <p>Stocks: 60%<br>Bonds: 30%<br>Alternatives: 10%</p>
-      </div>
-      <div class="card">
-        <h3>Projected Value</h3>
-        <p>Estimated portfolio value after timeline: <strong>$45,230</strong></p>
-      </div>
-      <div class="card">
-        <h3>Actions</h3>
-        <p><a class="btn" href="#">Open Investing Platform</a> <a class="btn alt" href="#">Save Plan</a></p>
+        <h3>🎉 Setup Complete!</h3>
+        <p>Your portfolio has been configured and is ready to start growing. You can now manage your investments directly through your chosen platform.</p>
+        <div id="finalSummary" style="margin-top:1rem;padding:1rem;background:var(--bg);border-radius:8px"></div>
+        <p style="margin-top:1rem">
+          <a class="btn" href="#home">Create Another Plan</a>
+          <button class="btn alt" onclick="window.print()">Print Plan Summary</button>
+        </p>
       </div>
     </section>
-
-    <section id="siteplan" class="card" style="margin-top:1.25rem;">
-      <h2>Site Plan</h2>
-      <p>This section contains the site plan details (color schema, typography, wireframe, purpose, scenarios).</p>
-      <div class="card">
-        <h3>Site Name</h3>
-        <p class="logo">TradeSmart Guide</p>
-        <p><strong>Why this name?</strong> The name conveys intelligent, strategic trading guidance that helps users make informed investment decisions while remaining approachable.</p>
-      </div>
-
-      <div class="card">
-        <h3>Purpose</h3>
-        <p>Help busy individuals create personalized stock trading plans and implement them via an embedded investing platform.</p>
-      </div>
-
-      <div class="card">
-        <h3>Color Schema & Typography</h3>
-        <p>Primary: #2C3E50 · Secondary: #3498DB · Accent: #27AE60 · Background: #ECF0F1 · Text: #34495E</p>
-        <p>Fonts: Montserrat (headings), Open Sans (body)</p>
-      </div>
-
-      <div class="card">
-        <h3>Wireframe</h3>
-        <p>Mobile and desktop layouts with hero, plan builder, results, and embedded investing iframe. Saved plans stored in localStorage.</p>
-      </div>
-    </section>
-
   </main>
 
   <footer>
