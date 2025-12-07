@@ -126,6 +126,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     description: "Sophisticated allocation with alternative diversification",
                     details: "40% Large Cap Value, 10% International Stocks, 35% Bond Ladder, 15% Commodities/REITs"
                 }
+            ],
+            expert: [
+                {
+                    name: "Tactical Conservative",
+                    stocks: 55, bonds: 30, alternatives: 15,
+                    description: "Dynamic allocation with downside protection strategies",
+                    details: "35% Value, 20% Quality Factor, 30% Treasury Ladder, 15% Alternatives"
+                }
             ]
         },
         moderate: {
@@ -163,6 +171,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     stocks: 70, bonds: 15, alternatives: 15,
                     description: "Active allocation across multiple strategies",
                     details: "30% Large Cap Growth, 20% Value, 20% International, 15% Bonds, 15% Alternatives"
+                }
+            ],
+            expert: [
+                {
+                    name: "Factor Tilted Moderate",
+                    stocks: 75, bonds: 10, alternatives: 15,
+                    description: "Factor-based approach with tactical tilts",
+                    details: "25% Quality, 25% Value, 25% Momentum, 10% Bonds, 15% Alternatives"
                 }
             ]
         },
@@ -208,8 +224,33 @@ document.addEventListener('DOMContentLoaded', function() {
                     description: "Concentrated positions for outperformance",
                     details: "45% Growth Stocks, 25% Value, 15% International, 15% Alternatives/Commodities"
                 }
+            ],
+            expert: [
+                {
+                    name: "Concentrated Alpha",
+                    stocks: 95, bonds: 0, alternatives: 5,
+                    description: "High-conviction positions with leverage potential",
+                    details: "50% Individual Growth Stocks, 25% Thematic ETFs, 20% International, 5% Volatility"
+                }
             ]
         }
+    };
+
+    // Frequency multipliers for contributions
+    const frequencyMultipliers = {
+        weekly: 52,
+        biweekly: 26,
+        monthly: 12,
+        quarterly: 4,
+        annually: 1
+    };
+
+    // Compounding periods per year
+    const compoundingPeriods = {
+        daily: 365,
+        monthly: 12,
+        quarterly: 4,
+        annually: 1
     };
 
     function saveToLocalStorage() {
@@ -247,10 +288,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function restoreFormValues() {
         if (userData.amount) document.getElementById('investAmount').value = userData.amount;
+        if (userData.recurringAmount) document.getElementById('recurringAmount').value = userData.recurringAmount;
+        if (userData.recurringFrequency) document.getElementById('recurringFrequency').value = userData.recurringFrequency;
+        if (userData.contributionIncrease) document.getElementById('contributionIncrease').value = userData.contributionIncrease;
         if (userData.timeline) document.getElementById('timeline').value = userData.timeline;
         if (userData.expectedGrowth) document.getElementById('expectedGrowth').value = userData.expectedGrowth;
+        if (userData.inflationRate) document.getElementById('inflationRate').value = userData.inflationRate;
+        if (userData.compoundingFreq) document.getElementById('compoundingFreq').value = userData.compoundingFreq;
         if (userData.risk) document.getElementById('riskTolerance').value = userData.risk;
         if (userData.experience) document.getElementById('experience').value = userData.experience;
+        if (userData.investmentGoal) document.getElementById('investmentGoal').value = userData.investmentGoal;
+        if (userData.targetAmount) document.getElementById('targetAmount').value = userData.targetAmount;
+        if (userData.accountType) document.getElementById('accountType').value = userData.accountType;
+        if (userData.taxBracket) document.getElementById('taxBracket').value = userData.taxBracket;
     }
 
     function clearLocalStorage() {
@@ -263,18 +313,120 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Live projection preview calculation
+    function calculateAdvancedProjection(principal, recurringAmount, frequency, years, annualRate, inflationRate, contributionIncrease, compoundFreq) {
+        const periodsPerYear = compoundingPeriods[compoundFreq] || 12;
+        const contributionsPerYear = frequencyMultipliers[frequency] || 12;
+        const ratePerPeriod = (annualRate / 100) / periodsPerYear;
+        const inflationRateDecimal = inflationRate / 100;
+        const contributionIncreaseDecimal = contributionIncrease / 100;
+
+        let totalValue = principal;
+        let totalContributions = principal;
+        let currentContribution = recurringAmount;
+
+        // Calculate month by month for accuracy
+        for (let year = 0; year < years; year++) {
+            // Apply contribution increase at start of each year (except first)
+            if (year > 0) {
+                currentContribution = currentContribution * (1 + contributionIncreaseDecimal);
+            }
+
+            // Monthly calculations within each year
+            for (let month = 0; month < 12; month++) {
+                // Add contributions for this month based on frequency
+                const contributionsThisMonth = (contributionsPerYear / 12) * currentContribution;
+                totalContributions += contributionsThisMonth;
+                totalValue += contributionsThisMonth;
+
+                // Apply monthly growth (simplified from compound periods)
+                const monthlyRate = Math.pow(1 + ratePerPeriod, periodsPerYear / 12) - 1;
+                totalValue = totalValue * (1 + monthlyRate);
+            }
+        }
+
+        // Calculate inflation-adjusted value
+        const inflationFactor = Math.pow(1 + inflationRateDecimal, years);
+        const realValue = totalValue / inflationFactor;
+
+        return {
+            nominalValue: Math.round(totalValue),
+            realValue: Math.round(realValue),
+            totalContributions: Math.round(totalContributions),
+            totalGrowth: Math.round(totalValue - totalContributions)
+        };
+    }
+
+    function updateProjectionPreview() {
+        const principal = parseFloat(document.getElementById('investAmount').value) || 0;
+        const recurringAmount = parseFloat(document.getElementById('recurringAmount').value) || 0;
+        const frequency = document.getElementById('recurringFrequency').value;
+        const years = parseInt(document.getElementById('timeline').value) || 0;
+        const annualRate = parseFloat(document.getElementById('expectedGrowth').value) || 0;
+        const inflationRate = parseFloat(document.getElementById('inflationRate').value) || 2.5;
+        const contributionIncrease = parseFloat(document.getElementById('contributionIncrease').value) || 0;
+        const compoundFreq = document.getElementById('compoundingFreq').value;
+
+        if (years > 0 && (principal > 0 || recurringAmount > 0)) {
+            const projection = calculateAdvancedProjection(
+                principal, recurringAmount, frequency, years, 
+                annualRate, inflationRate, contributionIncrease, compoundFreq
+            );
+
+            document.getElementById('previewContributions').textContent = '$' + projection.totalContributions.toLocaleString();
+            document.getElementById('previewValue').textContent = '$' + projection.nominalValue.toLocaleString();
+            document.getElementById('previewGrowth').textContent = '$' + projection.totalGrowth.toLocaleString();
+            document.getElementById('previewRealValue').textContent = '$' + projection.realValue.toLocaleString();
+        } else {
+            document.getElementById('previewContributions').textContent = '$0';
+            document.getElementById('previewValue').textContent = '$0';
+            document.getElementById('previewGrowth').textContent = '$0';
+            document.getElementById('previewRealValue').textContent = '$0';
+        }
+    }
+
+    // Add event listeners for live preview
+    const previewFields = [
+        'investAmount', 'recurringAmount', 'recurringFrequency', 
+        'contributionIncrease', 'timeline', 'expectedGrowth', 
+        'inflationRate', 'compoundingFreq'
+    ];
+
+    previewFields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('input', updateProjectionPreview);
+            field.addEventListener('change', updateProjectionPreview);
+        }
+    });
+
+    // Initial preview calculation
+    updateProjectionPreview();
+
     const goalsForm = document.getElementById('goalsForm');
     if (goalsForm) {
         goalsForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             userData = {
-                amount: parseFloat(document.getElementById('investAmount').value),
+                amount: parseFloat(document.getElementById('investAmount').value) || 0,
+                recurringAmount: parseFloat(document.getElementById('recurringAmount').value) || 0,
+                recurringFrequency: document.getElementById('recurringFrequency').value,
+                contributionIncrease: parseFloat(document.getElementById('contributionIncrease').value) || 0,
                 timeline: parseInt(document.getElementById('timeline').value),
                 expectedGrowth: parseFloat(document.getElementById('expectedGrowth').value),
+                inflationRate: parseFloat(document.getElementById('inflationRate').value) || 2.5,
+                compoundingFreq: document.getElementById('compoundingFreq').value,
                 risk: document.getElementById('riskTolerance').value,
-                experience: document.getElementById('experience').value
+                experience: document.getElementById('experience').value,
+                investmentGoal: document.getElementById('investmentGoal').value,
+                targetAmount: parseFloat(document.getElementById('targetAmount').value) || 0,
+                accountType: document.getElementById('accountType').value,
+                taxBracket: parseInt(document.getElementById('taxBracket').value) || 0
             };
+
+            // Calculate total initial investment for portfolio generation
+            userData.totalInitialInvestment = userData.amount;
 
             saveToLocalStorage();
             generatePortfolioOptions();
@@ -289,10 +441,21 @@ document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('portfolioOptions');
         container.innerHTML = '';
 
-        const options = portfolioTemplates[userData.risk][userData.experience];
+        const riskOptions = portfolioTemplates[userData.risk];
+        const experienceOptions = riskOptions[userData.experience] || riskOptions['beginner'];
+        const options = experienceOptions;
         
         options.forEach((portfolio, index) => {
-            const projectedValue = calculateProjectedValue(userData.amount, userData.timeline, userData.expectedGrowth);
+            const projection = calculateAdvancedProjection(
+                userData.amount,
+                userData.recurringAmount,
+                userData.recurringFrequency,
+                userData.timeline,
+                userData.expectedGrowth,
+                userData.inflationRate,
+                userData.contributionIncrease,
+                userData.compoundingFreq
+            );
             
             const card = document.createElement('div');
             card.className = 'card portfolio-option';
@@ -312,9 +475,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <p style="font-size:0.9rem;color:var(--text);margin:0.5rem 0">${portfolio.description}</p>
                 <p style="font-size:0.85rem;color:#666;margin:0.5rem 0">${portfolio.details}</p>
-                <div style="background:var(--bg);padding:0.5rem;border-radius:6px;margin:0.5rem 0">
-                    <strong>Projected Value (${userData.timeline} years):</strong><br>
-                    <span style="font-size:1.3rem;color:var(--accent)">$${projectedValue.toLocaleString()}</span>
+                <div style="background:var(--bg);padding:0.75rem;border-radius:6px;margin:0.5rem 0">
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;font-size:0.85rem">
+                        <div>
+                            <strong>Total Contributions:</strong><br>
+                            <span>$${projection.totalContributions.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <strong>Projected Value:</strong><br>
+                            <span style="font-size:1.2rem;color:var(--accent)">$${projection.nominalValue.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <strong>Total Growth:</strong><br>
+                            <span style="color:var(--secondary)">+$${projection.totalGrowth.toLocaleString()}</span>
+                        </div>
+                        <div>
+                            <strong>Real Value (inflation-adj):</strong><br>
+                            <span>$${projection.realValue.toLocaleString()}</span>
+                        </div>
+                    </div>
                 </div>
                 <button class="btn select-plan-btn" data-index="${index}">Select This Plan</button>
             `;
@@ -413,10 +592,27 @@ document.addEventListener('DOMContentLoaded', function() {
         platformBtnName.textContent = selectedPlatform.name;
         platformNameInstructions.textContent = selectedPlatform.name;
         
+        const freqText = {
+            weekly: 'weekly',
+            biweekly: 'bi-weekly',
+            monthly: 'monthly',
+            quarterly: 'quarterly',
+            annually: 'annually'
+        };
+        
+        let contributionInfo = '';
+        if (userData.recurringAmount > 0) {
+            contributionInfo = `<br>Recurring: $${userData.recurringAmount.toLocaleString()} ${freqText[userData.recurringFrequency]}`;
+            if (userData.contributionIncrease > 0) {
+                contributionInfo += ` (increasing ${userData.contributionIncrease}%/year)`;
+            }
+        }
+        
         portfolioSummary.innerHTML = `
             <strong>${selectedPlan.name}</strong><br>
             Allocation: ${selectedPlan.stocks}% Stocks, ${selectedPlan.bonds}% Bonds, ${selectedPlan.alternatives}% Alternatives<br>
             <span style="font-size:0.9rem;color:#666">${selectedPlan.details}</span>
+            ${contributionInfo}
         `;
         
         document.getElementById('planInvestAmount').textContent = userData.amount.toLocaleString();
@@ -489,29 +685,82 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedPlan.alternatives
         );
         
-        const projectedValue = calculateProjectedValue(userData.amount, userData.timeline, userData.expectedGrowth);
+        const projection = calculateAdvancedProjection(
+            userData.amount,
+            userData.recurringAmount,
+            userData.recurringFrequency,
+            userData.timeline,
+            userData.expectedGrowth,
+            userData.inflationRate,
+            userData.contributionIncrease,
+            userData.compoundingFreq
+        );
+        
+        const freqText = {
+            weekly: 'Weekly',
+            biweekly: 'Bi-weekly',
+            monthly: 'Monthly',
+            quarterly: 'Quarterly',
+            annually: 'Annually'
+        };
+        
+        const goalText = {
+            retirement: 'Retirement Savings',
+            wealth: 'Wealth Building',
+            house: 'Home Down Payment',
+            education: 'Education Fund',
+            emergency: 'Emergency Fund Growth',
+            income: 'Passive Income Generation',
+            other: 'Other Goal'
+        };
+        
+        const accountText = {
+            taxable: 'Taxable Brokerage',
+            traditional_ira: 'Traditional IRA / 401(k)',
+            roth: 'Roth IRA / Roth 401(k)',
+            hsa: 'HSA (Health Savings Account)',
+            '529': '529 Education Plan'
+        };
         
         let planText = `TRADESMART GUIDE - PERSONALIZED TRADING PLAN\n`;
         planText += `Generated: ${new Date().toLocaleDateString()}\n`;
-        planText += `${'='.repeat(60)}\n\n`;
+        planText += `${'='.repeat(70)}\n\n`;
         
-        planText += `PORTFOLIO DETAILS\n`;
-        planText += `${'-'.repeat(60)}\n`;
-        planText += `Strategy: ${selectedPlan.name}\n`;
-        planText += `Investment Amount: $${userData.amount.toLocaleString()}\n`;
-        planText += `Timeline: ${userData.timeline} years\n`;
-        planText += `Expected Annual Return: ${userData.expectedGrowth}%\n`;
+        planText += `INVESTMENT PROFILE\n`;
+        planText += `${'-'.repeat(70)}\n`;
+        planText += `Investment Goal: ${goalText[userData.investmentGoal] || 'Not specified'}\n`;
         planText += `Risk Level: ${userData.risk.charAt(0).toUpperCase() + userData.risk.slice(1)}\n`;
+        planText += `Experience Level: ${userData.experience.charAt(0).toUpperCase() + userData.experience.slice(1)}\n`;
+        planText += `Account Type: ${accountText[userData.accountType]}\n`;
+        if (userData.targetAmount > 0) {
+            planText += `Target Amount: $${userData.targetAmount.toLocaleString()}\n`;
+        }
+        planText += `\n`;
+        
+        planText += `INVESTMENT DETAILS\n`;
+        planText += `${'-'.repeat(70)}\n`;
+        planText += `Initial Principal: $${userData.amount.toLocaleString()}\n`;
+        if (userData.recurringAmount > 0) {
+            planText += `Recurring Contribution: $${userData.recurringAmount.toLocaleString()} ${freqText[userData.recurringFrequency]}\n`;
+            if (userData.contributionIncrease > 0) {
+                planText += `Annual Contribution Increase: ${userData.contributionIncrease}%\n`;
+            }
+        }
+        planText += `Investment Timeline: ${userData.timeline} years\n`;
+        planText += `Expected Annual Return: ${userData.expectedGrowth}%\n`;
+        planText += `Expected Inflation Rate: ${userData.inflationRate}%\n`;
+        planText += `Compounding Frequency: ${userData.compoundingFreq.charAt(0).toUpperCase() + userData.compoundingFreq.slice(1)}\n`;
         planText += `Selected Platform: ${selectedPlatform.name}\n\n`;
         
-        planText += `ALLOCATION\n`;
-        planText += `${'-'.repeat(60)}\n`;
+        planText += `PORTFOLIO STRATEGY: ${selectedPlan.name}\n`;
+        planText += `${'-'.repeat(70)}\n`;
         planText += `Stocks: ${selectedPlan.stocks}%\n`;
         planText += `Bonds: ${selectedPlan.bonds}%\n`;
-        planText += `Alternatives: ${selectedPlan.alternatives}%\n\n`;
+        planText += `Alternatives: ${selectedPlan.alternatives}%\n`;
+        planText += `Details: ${selectedPlan.details}\n\n`;
         
-        planText += `RECOMMENDED TRADES\n`;
-        planText += `${'-'.repeat(60)}\n`;
+        planText += `RECOMMENDED TRADES (Initial Investment)\n`;
+        planText += `${'-'.repeat(70)}\n`;
         recommendations.forEach((stock, index) => {
             const shares = Math.floor(stock.amount / 100);
             const sharesToBuy = shares > 0 ? shares : (stock.amount / 100).toFixed(2);
@@ -521,8 +770,15 @@ document.addEventListener('DOMContentLoaded', function() {
             planText += `   Order Type: Market Order\n`;
         });
         
-        planText += `\n\nSTEP-BY-STEP INSTRUCTIONS\n`;
-        planText += `${'-'.repeat(60)}\n`;
+        planText += `\n\nPROJECTED RETURNS (${userData.timeline} years)\n`;
+        planText += `${'-'.repeat(70)}\n`;
+        planText += `Total Contributions: $${projection.totalContributions.toLocaleString()}\n`;
+        planText += `Projected Nominal Value: $${projection.nominalValue.toLocaleString()}\n`;
+        planText += `Total Growth: $${projection.totalGrowth.toLocaleString()}\n`;
+        planText += `Real Value (Inflation-Adjusted): $${projection.realValue.toLocaleString()}\n\n`;
+        
+        planText += `STEP-BY-STEP INSTRUCTIONS\n`;
+        planText += `${'-'.repeat(70)}\n`;
         planText += `1. Log into ${selectedPlatform.name}\n`;
         planText += `2. Navigate to the Trade/Buy page\n`;
         planText += `3. For each ticker listed above:\n`;
@@ -531,15 +787,15 @@ document.addEventListener('DOMContentLoaded', function() {
         planText += `   c. Enter the number of shares shown\n`;
         planText += `   d. Choose "Market Order" for order type\n`;
         planText += `   e. Review and confirm the trade\n`;
-        planText += `4. Verify all orders are executed successfully\n\n`;
-        
-        planText += `PROJECTED RETURNS\n`;
-        planText += `${'-'.repeat(60)}\n`;
-        planText += `Projected Value (${userData.timeline} years): $${projectedValue.toLocaleString()}\n`;
-        planText += `Total Gain: $${(projectedValue - userData.amount).toLocaleString()}\n\n`;
+        planText += `4. Verify all orders are executed successfully\n`;
+        if (userData.recurringAmount > 0) {
+            planText += `5. Set up automatic ${freqText[userData.recurringFrequency].toLowerCase()} transfers of $${userData.recurringAmount}\n`;
+            planText += `6. Consider enabling automatic investing for your recurring contributions\n`;
+        }
+        planText += `\n`;
         
         planText += `RISK DISCLOSURE\n`;
-        planText += `${'-'.repeat(60)}\n`;
+        planText += `${'-'.repeat(70)}\n`;
         planText += `Investing in securities involves risk, including possible loss of\n`;
         planText += `principal. Past performance does not guarantee future results. This\n`;
         planText += `is educational information only and not personalized investment advice.\n`;
@@ -547,7 +803,7 @@ document.addEventListener('DOMContentLoaded', function() {
         planText += `responsible for your own investment decisions. Always consult with a\n`;
         planText += `qualified financial advisor before making investment decisions.\n\n`;
         
-        planText += `${'='.repeat(60)}\n`;
+        planText += `${'='.repeat(70)}\n`;
         planText += `End of Trading Plan\n`;
         
         const blob = new Blob([planText], { type: 'text/plain' });
@@ -562,9 +818,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function completeSetup() {
-        const projectedValue = calculateProjectedValue(userData.amount, userData.timeline, userData.expectedGrowth);
-        const totalGain = projectedValue - userData.amount;
-        const annualReturn = userData.expectedGrowth;
+        const projection = calculateAdvancedProjection(
+            userData.amount,
+            userData.recurringAmount,
+            userData.recurringFrequency,
+            userData.timeline,
+            userData.expectedGrowth,
+            userData.inflationRate,
+            userData.contributionIncrease,
+            userData.compoundingFreq
+        );
 
         const recommendations = generateStockRecommendations(
             userData.amount,
@@ -572,6 +835,23 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedPlan.bonds,
             selectedPlan.alternatives
         );
+
+        const freqText = {
+            weekly: 'weekly',
+            biweekly: 'bi-weekly',
+            monthly: 'monthly',
+            quarterly: 'quarterly',
+            annually: 'annually'
+        };
+
+        let recurringInfo = '';
+        if (userData.recurringAmount > 0) {
+            recurringInfo = `
+                <div>
+                    <strong>Recurring Contribution:</strong><br>$${userData.recurringAmount.toLocaleString()} ${freqText[userData.recurringFrequency]}
+                </div>
+            `;
+        }
 
         document.getElementById('finalSummary').innerHTML = `
             <h4 style="color:var(--primary);margin-bottom:0.75rem">Your Investment Plan Summary</h4>
@@ -585,6 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div>
                     <strong>Initial Investment:</strong><br>$${userData.amount.toLocaleString()}
                 </div>
+                ${recurringInfo}
                 <div>
                     <strong>Timeline:</strong><br>${userData.timeline} years
                 </div>
@@ -596,20 +877,28 @@ document.addEventListener('DOMContentLoaded', function() {
                         Stocks: ${selectedPlan.stocks}% | Bonds: ${selectedPlan.bonds}% | Alt: ${selectedPlan.alternatives}%
                     </div>
                     <div>
-                        <strong>Expected Annual Return:</strong><br>${annualReturn}%
+                        <strong>Expected Annual Return:</strong><br>${userData.expectedGrowth}%
+                    </div>
+                    <div>
+                        <strong>Total Contributions:</strong><br>
+                        $${projection.totalContributions.toLocaleString()}
                     </div>
                     <div>
                         <strong>Projected Value:</strong><br>
-                        <span style="color:var(--accent);font-size:1.2rem">$${projectedValue.toLocaleString()}</span>
+                        <span style="color:var(--accent);font-size:1.2rem">$${projection.nominalValue.toLocaleString()}</span>
                     </div>
                     <div>
-                        <strong>Total Gain:</strong><br>
-                        <span style="color:var(--accent)">$${totalGain.toLocaleString()}</span>
+                        <strong>Total Growth:</strong><br>
+                        <span style="color:var(--secondary)">$${projection.totalGrowth.toLocaleString()}</span>
+                    </div>
+                    <div>
+                        <strong>Real Value (inflation-adj):</strong><br>
+                        $${projection.realValue.toLocaleString()}
                     </div>
                 </div>
             </div>
             <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid #ddd">
-                <h5 style="color:var(--primary);margin-bottom:0.5rem">Your Holdings:</h5>
+                <h5 style="color:var(--primary);margin-bottom:0.5rem">Your Initial Holdings:</h5>
                 ${recommendations.map(stock => {
                     const shares = Math.floor(stock.amount / 100);
                     const sharesToBuy = shares > 0 ? shares : (stock.amount / 100).toFixed(2);
@@ -651,6 +940,9 @@ document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.platform-card').forEach(card => {
                 card.classList.remove('active');
             });
+            
+            // Reset preview
+            updateProjectionPreview();
         });
     });
 });

@@ -64,47 +64,179 @@
       <div id="step1" class="card step-card">
         <h3>Step 1: Set Your Goals</h3>
         <form id="goalsForm">
-          <div class="form-row">
-            <div class="form-field-flex">
-              <label for="investAmount">Investment Amount ($)</label>
-              <input type="number" id="investAmount" placeholder="5000" min="100" required>
-            </div>
-            <div class="form-field-flex">
-              <label for="timeline">Investment Timeline (years)</label>
-              <input type="number" id="timeline" placeholder="5" min="1" max="50" required>
-            </div>
-          </div>
-          
-          <div class="form-row form-row-margin">
-            <div class="form-field-flex">
-              <label for="expectedGrowth">Expected Annual Growth (%)</label>
-              <input type="number" id="expectedGrowth" placeholder="8" min="0" max="30" step="0.5" required>
-            </div>
-            <div class="form-field-flex">
-              <label for="riskTolerance">Risk Tolerance</label>
-              <select id="riskTolerance" required>
-                <option value="">Select...</option>
-                <option value="conservative">Conservative - Preserve capital</option>
-                <option value="moderate">Moderate - Balanced approach</option>
-                <option value="aggressive">Aggressive - Maximum growth</option>
-              </select>
+          <!-- Initial Investment Section -->
+          <div class="form-section">
+            <h4 class="form-section-title">💰 Initial Investment</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="investAmount">Principal Amount ($)</label>
+                <input type="number" id="investAmount" placeholder="10000" min="0" required>
+                <span class="field-hint">Your starting investment amount</span>
+              </div>
             </div>
           </div>
 
-          <div class="form-row form-row-margin">
-            <div class="form-field-flex">
-              <label for="experience">Investment Experience</label>
-              <select id="experience" required>
-                <option value="">Select your experience level...</option>
-                <option value="beginner">Beginner - New to investing</option>
-                <option value="intermediate">Intermediate - Some experience</option>
-                <option value="advanced">Advanced - Experienced investor</option>
-                <option value="expert">Expert - Professional level</option>
-              </select>
+          <!-- Recurring Contributions Section -->
+          <div class="form-section">
+            <h4 class="form-section-title">🔄 Recurring Contributions</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="recurringAmount">Contribution Amount ($)</label>
+                <input type="number" id="recurringAmount" placeholder="500" min="0" value="0">
+                <span class="field-hint">Amount to add each period (0 for none)</span>
+              </div>
+              <div class="form-field-flex">
+                <label for="recurringFrequency">Contribution Frequency</label>
+                <select id="recurringFrequency">
+                  <option value="monthly">Monthly</option>
+                  <option value="biweekly">Bi-weekly (every 2 weeks)</option>
+                  <option value="weekly">Weekly</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="annually">Annually</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row form-row-margin">
+              <div class="form-field-flex">
+                <label for="contributionIncrease">Annual Contribution Increase (%)</label>
+                <input type="number" id="contributionIncrease" placeholder="0" min="0" max="25" step="0.5" value="0">
+                <span class="field-hint">Increase contributions yearly (e.g., with raises)</span>
+              </div>
             </div>
           </div>
 
-          <p class="button-row"><button type="submit" class="btn">Generate My Plans</button></p>
+          <!-- Timeline & Growth Section -->
+          <div class="form-section">
+            <h4 class="form-section-title">📈 Timeline & Growth Expectations</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="timeline">Investment Duration (years)</label>
+                <input type="number" id="timeline" placeholder="10" min="1" max="50" required>
+              </div>
+              <div class="form-field-flex">
+                <label for="expectedGrowth">Expected Annual Return (%)</label>
+                <input type="number" id="expectedGrowth" placeholder="7" min="0" max="30" step="0.5" required>
+                <span class="field-hint">Historical S&P 500: ~10%, Bonds: ~4-5%</span>
+              </div>
+            </div>
+            <div class="form-row form-row-margin">
+              <div class="form-field-flex">
+                <label for="inflationRate">Expected Inflation Rate (%)</label>
+                <input type="number" id="inflationRate" placeholder="2.5" min="0" max="15" step="0.1" value="2.5">
+                <span class="field-hint">For real (inflation-adjusted) returns</span>
+              </div>
+              <div class="form-field-flex">
+                <label for="compoundingFreq">Compounding Frequency</label>
+                <select id="compoundingFreq">
+                  <option value="daily">Daily</option>
+                  <option value="monthly" selected>Monthly</option>
+                  <option value="quarterly">Quarterly</option>
+                  <option value="annually">Annually</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Risk Profile Section -->
+          <div class="form-section">
+            <h4 class="form-section-title">⚖️ Risk Profile</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="riskTolerance">Risk Tolerance</label>
+                <select id="riskTolerance" required>
+                  <option value="">Select your risk tolerance...</option>
+                  <option value="conservative">Conservative - Preserve capital, minimal volatility</option>
+                  <option value="moderate">Moderate - Balanced growth and stability</option>
+                  <option value="aggressive">Aggressive - Maximum growth, accept higher volatility</option>
+                </select>
+              </div>
+              <div class="form-field-flex">
+                <label for="experience">Investment Experience</label>
+                <select id="experience" required>
+                  <option value="">Select your experience level...</option>
+                  <option value="beginner">Beginner - New to investing</option>
+                  <option value="intermediate">Intermediate - Some experience</option>
+                  <option value="advanced">Advanced - Experienced investor</option>
+                  <option value="expert">Expert - Professional level</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row form-row-margin">
+              <div class="form-field-flex">
+                <label for="investmentGoal">Primary Investment Goal</label>
+                <select id="investmentGoal">
+                  <option value="retirement">Retirement savings</option>
+                  <option value="wealth">Wealth building</option>
+                  <option value="house">Home down payment</option>
+                  <option value="education">Education fund</option>
+                  <option value="emergency">Emergency fund growth</option>
+                  <option value="income">Passive income generation</option>
+                  <option value="other">Other goal</option>
+                </select>
+              </div>
+              <div class="form-field-flex">
+                <label for="targetAmount">Target Amount (optional)</label>
+                <input type="number" id="targetAmount" placeholder="1000000" min="0">
+                <span class="field-hint">Your financial goal amount</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tax & Account Section -->
+          <div class="form-section">
+            <h4 class="form-section-title">🏦 Account Type & Tax Considerations</h4>
+            <div class="form-row">
+              <div class="form-field-flex">
+                <label for="accountType">Account Type</label>
+                <select id="accountType">
+                  <option value="taxable">Taxable Brokerage</option>
+                  <option value="traditional_ira">Traditional IRA / 401(k)</option>
+                  <option value="roth">Roth IRA / Roth 401(k)</option>
+                  <option value="hsa">HSA (Health Savings Account)</option>
+                  <option value="529">529 Education Plan</option>
+                </select>
+              </div>
+              <div class="form-field-flex">
+                <label for="taxBracket">Estimated Tax Bracket (%)</label>
+                <select id="taxBracket">
+                  <option value="0">0% - Tax-advantaged account</option>
+                  <option value="10">10%</option>
+                  <option value="12">12%</option>
+                  <option value="22" selected>22%</option>
+                  <option value="24">24%</option>
+                  <option value="32">32%</option>
+                  <option value="35">35%</option>
+                  <option value="37">37%</option>
+                </select>
+                <span class="field-hint">For dividend/capital gains estimates</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Projection Preview -->
+          <div id="projectionPreview" class="projection-preview">
+            <h4 class="form-section-title">📊 Quick Projection Preview</h4>
+            <div class="projection-grid">
+              <div class="projection-item">
+                <span class="projection-label">Total Contributions</span>
+                <span id="previewContributions" class="projection-value">$0</span>
+              </div>
+              <div class="projection-item">
+                <span class="projection-label">Projected Value</span>
+                <span id="previewValue" class="projection-value accent">$0</span>
+              </div>
+              <div class="projection-item">
+                <span class="projection-label">Total Growth</span>
+                <span id="previewGrowth" class="projection-value success">$0</span>
+              </div>
+              <div class="projection-item">
+                <span class="projection-label">Inflation-Adjusted Value</span>
+                <span id="previewRealValue" class="projection-value">$0</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="button-row"><button type="submit" class="btn btn-large">Generate My Personalized Plans →</button></p>
         </form>
       </div>
 
