@@ -61,9 +61,9 @@
     let trendSmaValues = {};
 
     // DOM Elements
-    const modal = document.getElementById('autoTradeModal');
+    const model = document.getElementById('autoTradeModel');
     const autoTradeBtn = document.getElementById('autoTradeBtn');
-    const closeModalBtn = document.getElementById('closeAutoTradeModal');
+    const closeModelBtn = document.getElementById('closeAutoTradeModel');
     const autoTradeForm = document.getElementById('autoTradeForm');
     const setupSection = document.getElementById('autoTradeSetup');
     const simulationSection = document.getElementById('autoTradeSimulation');
@@ -76,14 +76,14 @@
     // Initialize
     document.addEventListener('DOMContentLoaded', function() {
         if (autoTradeBtn) {
-            autoTradeBtn.addEventListener('click', openModal);
+            autoTradeBtn.addEventListener('click', openModel);
         }
-        if (closeModalBtn) {
-            closeModalBtn.addEventListener('click', closeModal);
+        if (closeModelBtn) {
+            closeModelBtn.addEventListener('click', closeModel);
         }
-        if (modal) {
-            modal.addEventListener('click', function(e) {
-                if (e.target === modal) closeModal();
+        if (model) {
+            model.addEventListener('click', function(e) {
+                if (e.target === model) closeModel();
             });
         }
         if (autoTradeForm) {
@@ -119,16 +119,16 @@
         if (intervalField) intervalField.value = DEFAULT_OPTIMIZED_CONFIG.checkInterval;
     }
 
-    function openModal() {
-        if (modal) {
-            modal.style.display = 'flex';
+    function openModel() {
+        if (model) {
+            model.style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
     }
 
-    function closeModal() {
-        if (modal) {
-            modal.style.display = 'none';
+    function closeModel() {
+        if (model) {
+            model.style.display = 'none';
             document.body.style.overflow = '';
             if (simulationRunning) {
                 stopSimulation();
