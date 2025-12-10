@@ -23,7 +23,7 @@
 
   <main class="container">
     <section id="home" class="hero">
-      <h1>Stop Guessing. Start Planning.</h1>
+      <h1>Stop Guessing! Start Planning Your Investment.</h1>
       <p class="muted">Build a personalized trading plan based on your goals, timeline, and risk tolerance.</p>
       <p><a class="btn" href="#how">Create Your Trading Plan</a></p>
     </section>
@@ -56,7 +56,7 @@
           <p>Review personalized portfolio options and select the one that best fits your needs.</p>
         </div>
         <div class="card">
-          <h3>3. Implement</h3>
+          <h3>3. Implement It Now</h3>
           <p>Choose your preferred trading platform and let us set up your portfolio automatically.</p>
         </div>
       </div>
@@ -82,15 +82,15 @@
             <div class="form-row">
               <div class="form-field-flex">
                 <label for="recurringAmount">Contribution Amount ($)</label>
-                <input type="number" id="recurringAmount" placeholder="500" min="0" value="0">
+                <input type="number" id="recurringAmount" placeholder="200" min="0" value="0">
                 <span class="field-hint">Amount to add each period (0 for none)</span>
               </div>
               <div class="form-field-flex">
                 <label for="recurringFrequency">Contribution Frequency</label>
                 <select id="recurringFrequency">
-                  <option value="monthly">Monthly</option>
-                  <option value="biweekly">Bi-weekly (every 2 weeks)</option>
                   <option value="weekly">Weekly</option>
+                  <option value="biweekly">Bi-weekly</option>
+                  <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
                   <option value="annually">Annually</option>
                 </select>
@@ -100,7 +100,7 @@
               <div class="form-field-flex">
                 <label for="contributionIncrease">Annual Contribution Increase (%)</label>
                 <input type="number" id="contributionIncrease" placeholder="0" min="0" max="25" step="0.5" value="0">
-                <span class="field-hint">Increase contributions yearly (e.g., with raises)</span>
+                <span class="field-hint">Increase contributions yearly</span>
               </div>
             </div>
           </div>
@@ -129,9 +129,9 @@
                 <label for="compoundingFreq">Compounding Frequency</label>
                 <select id="compoundingFreq">
                   <option value="daily">Daily</option>
-                  <option value="monthly" selected>Monthly</option>
+                  <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
-                  <option value="annually">Annually</option>
+                  <option value="annually" selected>Annually</option>
                 </select>
               </div>
             </div>
@@ -236,7 +236,7 @@
             </div>
           </div>
 
-          <p class="button-row"><button type="submit" class="btn btn-large">Generate My Personalized Plans →</button></p>
+          <p class="button-row"><button type="submit" class="btn btn-large">Generate My Plan →</button></p>
         </form>
       </div>
 
@@ -307,7 +307,7 @@
                 <strong>⚠️ Important Notes:</strong>
                 <ul class="warning-list">
                   <li>These are market orders - prices may vary slightly</li>
-                  <li>Consider market hours (9:30 AM - 4:00 PM ET)</li>
+                  <li>Consider market hours (7:30 AM - 2:00 PM MST)</li>
                   <li>Fractional shares may not be available for all stocks on all platforms</li>
                   <li>Review all details before confirming trades</li>
                 </ul>
@@ -323,9 +323,13 @@
                 </button>
                 <br>
                 <button id="autoTradeBtn" class="btn auto-trade-btn btn-medium">
-                  🤖 Auto Trade (Optimized)
+                  🤖 Auto Trade Simulation
                 </button>
               </div>
+            </div>
+
+            <div class="risk-disclosure">
+              <strong>⚠️ RISK DISCLOSURE:</strong> Investing in securities involves risk, including possible loss of principal. Past performance does not guarantee future results. This is educational information only and not personalized investment advice. TradeSmart Guide is not a registered investment advisor. You are responsible for your own investment decisions. Always consult with a qualified financial advisor before making investment decisions.
             </div>
 
             <div class="instructions-section">
@@ -362,10 +366,6 @@
               </div>
             </div>
 
-            <div class="risk-disclosure">
-              <strong>⚠️ RISK DISCLOSURE:</strong> Investing in securities involves risk, including possible loss of principal. Past performance does not guarantee future results. This is educational information only and not personalized investment advice. TradeSmart Guide is not a registered investment advisor. You are responsible for your own investment decisions. Always consult with a qualified financial advisor before making investment decisions.
-            </div>
-
             <div class="complete-button-wrapper">
               <button id="markCompleteBtn" class="btn alt btn-large">
                 ✅ I've Completed My Trades
@@ -389,15 +389,15 @@
     </section>
   </main>
 
-  <!-- Auto Trade Modal - OPTIMIZED VERSION -->
-  <div id="autoTradeModal" class="modal-overlay">
-    <div class="modal-container">
-      <div class="modal-header">
-        <h2>🤖 Auto Trade Setup (Optimized)</h2>
-        <button id="closeAutoTradeModal" class="modal-close">&times;</button>
+  <!-- Auto Trade Model - OPTIMIZED VERSION -->
+  <div id="autoTradeModel" class="model-overlay">
+    <div class="model-container">
+      <div class="model-header">
+        <h2>🤖 Auto Trade Setup</h2>
+        <button id="closeAutoTradeModel" class="model-close">&times;</button>
       </div>
       
-      <div id="autoTradeSetup" class="modal-content">
+      <div id="autoTradeSetup" class="model-content">
         <!-- Optimization Notice -->
         <div class="optimization-notice">
           <strong>✨ OPTIMIZED CONFIGURATION</strong>
@@ -424,7 +424,7 @@
             </div>
             <div class="session-item">
               <span class="session-label">Best Times</span>
-              <span class="session-value">9:30-11:30 AM ET<br>2:00-4:00 PM ET</span>
+              <span class="session-value">8:00-10:00 AM MST<br>12:00-2:00 PM MST</span>
             </div>
             <div class="session-item">
               <span class="session-label">Avoid</span>
@@ -441,7 +441,7 @@
         <form id="autoTradeForm">
           <div class="config-section">
             <h4>🔐 Robinhood Credentials</h4>
-            <p class="config-note">These are stored locally and used only for simulation display.</p>
+            <p class="config-note">These are stored locally on your device and used only for simulation display.</p>
             <div class="form-row">
               <div class="form-field-flex">
                 <label for="rhUsername">Robinhood Email</label>
@@ -470,7 +470,7 @@
             <div class="form-row">
               <div class="form-field-flex">
                 <label for="tradingBuffer">Trading Buffer (%)</label>
-                <input type="number" id="tradingBuffer" value="3" min="0.5" max="10" step="0.5" required>
+                <input type="number" id="tradingBuffer" value="3" min="0" max="10" step="0.1" required>
                 <span class="field-hint">3% recommended (was 0.2%)</span>
               </div>
               <div class="form-field-flex">
@@ -583,7 +583,7 @@
         </form>
       </div>
 
-      <div id="autoTradeSimulation" class="modal-content" style="display: none;">
+      <div id="autoTradeSimulation" class="model-content" style="display: none;">
         <div class="simulation-header">
           <div class="sim-status">
             <span class="status-dot"></span>

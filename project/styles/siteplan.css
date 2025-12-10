@@ -411,10 +411,6 @@ select:focus {
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.15);
 }
 
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
@@ -611,9 +607,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 /* ============================================ */
-/* AUTO TRADE MODAL */
+/* AUTO TRADE MODEL */
 /* ============================================ */
-.modal-overlay {
+.model-overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -628,7 +624,7 @@ input[type="number"]::-webkit-outer-spin-button {
   padding: 1rem;
 }
 
-.modal-container {
+.model-container {
   background: #1a1a2e;
   border-radius: 16px;
   width: 100%;
@@ -640,7 +636,7 @@ input[type="number"]::-webkit-outer-spin-button {
   flex-direction: column;
 }
 
-.modal-header {
+.model-header {
   background: linear-gradient(135deg, #16213e, #1a1a2e);
   padding: 1.25rem 1.5rem;
   display: flex;
@@ -649,13 +645,13 @@ input[type="number"]::-webkit-outer-spin-button {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.modal-header h2 {
+.model-header h2 {
   color: #fff;
   margin: 0;
   font-size: 1.4rem;
 }
 
-.modal-close {
+.model-close {
   background: none;
   border: none;
   color: #fff;
@@ -667,11 +663,11 @@ input[type="number"]::-webkit-outer-spin-button {
   transition: opacity 0.2s;
 }
 
-.modal-close:hover {
+.model-close:hover {
   opacity: 1;
 }
 
-.modal-content {
+.model-content {
   padding: 1.5rem;
   overflow-y: auto;
   flex: 1;
@@ -717,13 +713,13 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-bottom: 1rem !important;
 }
 
-.modal-content label {
+.model-content label {
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.9rem;
 }
 
-.modal-content input,
-.modal-content select {
+.model-content input,
+.model-content select {
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
@@ -732,18 +728,18 @@ input[type="number"]::-webkit-outer-spin-button {
   font-size: 0.95rem;
 }
 
-.modal-content input::placeholder {
+.model-content input::placeholder {
   color: rgba(255, 255, 255, 0.4);
 }
 
-.modal-content input:focus,
-.modal-content select:focus {
+.model-content input:focus,
+.model-content select:focus {
   outline: none;
   border-color: var(--secondary);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
 }
 
-.modal-content .field-hint {
+.model-content .field-hint {
   display: block;
   font-size: 0.75rem;
   color: rgba(255, 255, 255, 0.4);
@@ -984,8 +980,8 @@ input[type="number"]::-webkit-outer-spin-button {
   .simulation-stats {
     grid-template-columns: 1fr;
   }
-  
-  .modal-container {
+
+  .model-container {
     max-height: 95vh;
   }
   
